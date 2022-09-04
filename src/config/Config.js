@@ -26,8 +26,8 @@ exports.connectDB = {
 }
 
 exports.ConfigKeySecret = {
-    accessTokenSecret: 'access-token-secret-checkemail-vodinhnghiaskype@gmail.com-green-student-version-1@',
+    accessTokenSecret: 'access-token-secret-check-student-version-1@',
     accessTokenLife: '24h',
     refreshTokenLife: '3650d',
-    refreshTokenSecret: 'token-refresh-secret-checkemail-vodinhnghiaskype@gmail.com-green-student-ver-1@',
+    refreshTokenSecret: 'token-refresh-secret-check-student-version-1@',
 }
