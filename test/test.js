@@ -1,75 +1,78 @@
-const User = require("../src/models/User");
-const chai = require("chai");
-const chaiHttp = require("chai-http");
-const app = require("../src/server");
+const User = require('../src/models/User');
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const app = require('../src/server');
+const { cryptoPass } = require('../src/until/Crypto');
 chai.should();
 
 chai.use(chaiHttp);
-
-describe("Users", () => {
+describe('Users', () => {
     beforeEach((done) => {
         User.deleteMany({}, (err) => {
             done();
         });
     });
-    describe("/GET User", () => {
-        it("it should GET all the user", (done) => {
+    describe('/GET user', () => {
+        it('it should GET all the user', (done) => {
             chai
                 .request(app)
-                .get("/api/user")
+                .get('/api/user')
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.data.should.be.a("array");
+                    res.body.data.should.be.a('array');
                     res.body.data.length.should.be.eql(0);
                     done();
                 });
         });
     });
-    describe("/POST user", () => {
-        it("it should new POST a user", (done) => {
+    describe('/POST user', () => {
+        it('it should new POST a user', (done) => {
             const user = new User({
-                email: 'test@gmail.com',
-                passWord: '...',
+                email: 'admin.students@gmail.com',
+                passWord: cryptoPass('123Code#'),
+                status: 0,
                 role: 'ADMIN',
             });
             chai
                 .request(app)
-                .post("/api/user")
-                .send(User)
+                .post('/api/user/createUser')
+                .send(user)
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.data.should.be.a("object");
-                    res.body.status.should.be.eql("success");
+                    res.body.data.should.be.a('object');
+                    res.body.status.should.be.eql('success');
                     done();
                 });
         });
     });
-    describe("/GET/:id user", () => {
-        it("it should GET a user by the id", (done) => {
+    describe('/GET/:id user', () => {
+        it('it should GET a user by the id', (done) => {
             const user = new User({
-                email: 'test@gmail.com',
-                passWord: '...',
+                email: 'admin.students@gmail.com',
+                passWord: cryptoPass('123Code#'),
+                status: 0,
                 role: 'ADMIN',
             });
             user.save((err, user) => {
                 chai
                     .request(app)
-                    .get("/api/user/" + user.id)
-                    .send(User)
+                    .get('/api/user/' + user.id)
+                    .send(user)
                     .end((err, res) => {
                         res.should.have.status(200);
-                        res.body.data.should.be.a("object");
-                        res.body.status.should.be.eql("success");
+                        res.body.data.should.be.a('object');
+                        res.body.status.should.be.eql('success');
                         done();
                     });
             });
         });
     });
-    describe("/PUT/:id User", () => {
-        it("it should UPDATE a User given the id", (done) => {
+    describe('/PUT/:id user', () => {
+        it('it should UPDATE a user given the id', (done) => {
             const body = {
-                email: 'test@gmail.com',
-                passWord: '...',
+                email: 'admin.students@gmail.com',
+                passWord: cryptoPass('123Code#'),
+                status: 0,
                 role: 'ADMIN',
             }
             let user = new User(body);
@@ -77,32 +80,33 @@ describe("Users", () => {
                 console.log(user.id);
                 chai
                     .request(app)
-                    .put("/api/Users/" + user.id)
+                    .put('/api/user/' + user.id)
                     .send(body)
                     .end((err, res) => {
                         res.should.have.status(200);
-                        res.body.data.should.be.a("object");
-                        res.body.status.should.be.eql("success");
+                        res.body.data.should.be.a('object');
+                        res.body.status.should.be.eql('success');
                         done();
                     });
             });
         });
     });
-    describe("/DELETE/:id user", () => {
-        it("it should DELETE a user given the id", (done) => {
+    describe('/DELETE/:id user', () => {
+        it('it should DELETE a user given the id', (done) => {
             const user = new User({
-                email: 'test@gmail.com',
-                passWord: '...',
+                email: 'admin.students@gmail.com',
+                passWord: cryptoPass('123Code#'),
+                status: 0,
                 role: 'ADMIN',
             });
             user.save((err, user) => {
                 chai
                     .request(app)
-                    .delete("/api/Users/" + user.id)
+                    .delete('/api/user/' + user.id)
                     .end((err, res) => {
                         res.should.have.status(200);
-                        res.body.data.should.be.a("object");
-                        res.body.status.should.be.eql("success");
+                        res.body.data.should.be.a('object');
+                        res.body.status.should.be.eql('success');
                         done();
                     });
             });

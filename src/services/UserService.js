@@ -1,4 +1,11 @@
-const UserModel = require("../models/User");
+const UserModel = require('../models/User');
+
+exports.findUserLogin = async(email, passWord) => {
+    return await UserModel.findOne({
+        email,
+        passWord,
+    })
+}
 
 exports.getAllUsers = async() => {
     return await UserModel.find();

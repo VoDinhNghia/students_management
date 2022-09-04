@@ -6,7 +6,7 @@ exports.cors = {
 
 exports.environment = "local"; //local, product
 
-exports.port = process.env.PORT || 8000;
+exports.port = process.env.PORT || 3000;
 
 //configure mongoose
 exports.connectDB = {
