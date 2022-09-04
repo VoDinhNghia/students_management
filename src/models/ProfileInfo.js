@@ -10,10 +10,24 @@ const blogSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true
     },
-    firstName: String,
-    lastName: String,
-    middleName: String,
-    avatar: String,
+    firstName: {
+        type: String,
+    },
+    lastName: {
+        type: String,
+    },
+    middleName: {
+        type: String,
+    },
+    avatar: {
+        type: String,
+    },
+    mobile: {
+        type: Number,
+    },
+    gender: {
+        type: String,
+    },
     createdAt: {
         type: Date,
         default: Date.now,

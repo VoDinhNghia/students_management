@@ -1,37 +1,4 @@
 exports.authPath = {
-    '/auth/register': {
-        'post': {
-            'tags': [
-                'Auth'
-            ],
-            'description': 'Register account',
-            'parameters': [{
-                'name': 'body',
-                'in': 'body',
-                'description': 'The username of the user',
-                'example': {
-                    'UserName': 'string',
-                    'Email': 'string',
-                    'PassWord': 'string',
-                    'Mobile': 365728889,
-                    'Gender': 1
-                },
-                'required': true
-            }],
-            'responses': {
-                '200': {
-                    'description': 'Register susscess.',
-                    'content': {
-                        'application/json': {
-                            'schema': {
-                                'type': 'array'
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    },
     '/user/login': {
         'post': {
             'tags': [
