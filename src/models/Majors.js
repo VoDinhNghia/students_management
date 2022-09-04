@@ -16,12 +16,11 @@ const majorSchema = new Schema({
     award: [{
         awardId: Schema.Types.ObjectId,
     }],
-    headOfSection: {
-        type: Schema.Types.ObjectId,
-    },
-    eputyHead: {
-        type: Schema.Types.ObjectId,
-    },
+    lecturerList: [{
+        lecturerId: Schema.Types.ObjectId,
+        headOfSection: Boolean,
+        eputyHead: Boolean,
+    }],
     createdAt: {
         type: Date,
         default: Date.now,

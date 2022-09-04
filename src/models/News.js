@@ -1,13 +1,22 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const semesterSchema = new Schema({
+const newsSchema = new Schema({
     name: {
         type: String,
         required: true,
     },
-    year: {
-        type: Date,
+    type: {
+        type: String,
+    },
+    content: {
+        type: Text,
+    },
+    url: {
+        type: String,
+    },
+    attachment: {
+        type: Schema.Types.ObjectId,
     },
     createdAt: {
         type: Date,
@@ -19,4 +28,4 @@ const semesterSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('semesters', semesterSchema);
+module.exports = mongoose.model('news', newsSchema);

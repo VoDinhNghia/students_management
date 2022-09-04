@@ -12,12 +12,11 @@ const facultySchema = new Schema({
     award: [{
         awardId: Schema.Types.ObjectId,
     }],
-    deanFaculty: {
-        type: Schema.Types.ObjectId,
-    },
-    vicePresident: {
-        type: Schema.Types.ObjectId,
-    },
+    lecturerList: [{
+        lecturerId: Schema.Types.ObjectId,
+        deanFaculty: Boolean,
+        vicePresident: Boolean,
+    }],
     createdAt: {
         type: Date,
         default: Date.now,

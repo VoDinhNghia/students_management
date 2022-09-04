@@ -10,10 +10,22 @@ const subjectSchema = new Schema({
         type: String,
         required: true,
     },
-    semester: {
-        type: Schema.Types.ObjectId,
+    openTime: {
+        type: Datetime,
     },
-    size: {
+    closeTime: {
+        type: Datetime,
+    },
+    schedule: {
+        learnDate: String, // monday,....
+        startDate: Datetime,
+        endDate: DateTime,
+        semester: Schema.Types.ObjectId,
+    },
+    size: { // total student
+        type: Number,
+    },
+    numberOfCredits: {
         type: Number,
     },
     numberOfFailed: {

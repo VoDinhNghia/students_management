@@ -8,6 +8,14 @@ const ClassSchema = new Schema({
     courseYear: {
         type: String
     },
+    period: { // study period
+        maximum: {
+            type: Number,
+        },
+        minimum: {
+            type: Number,
+        }
+    },
     classSize: {
         type: Number
     },

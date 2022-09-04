@@ -8,7 +8,9 @@ const profileSchema = new Schema({
     },
     classId: {
         type: Schema.Types.ObjectId,
-        required: true
+    },
+    facultyId: { // role lecture
+        type: Schema.Types.ObjectId,
     },
     firstName: {
         type: String,
@@ -31,12 +33,28 @@ const profileSchema = new Schema({
     listSubject: [ // list subject
         {
             subjectId: Schema.Types.ObjectId,
-            status: String, // failed or pass
+            result: String, // failed or pass
         }
     ],
     study: [{ // research articles, graduate theses
         attachmentId: Schema.Types.ObjectId,
     }],
+    studyProcess: {
+        listSemester: [
+            { semesterId: Schema.Types.ObjectId }
+        ],
+        toeicCertificate: {
+            status: Boolean,
+            attachmentId: Schema.Types.ObjectId,
+            scores: Number,
+        },
+        itCertificate: {
+            status: Boolean,
+            attachmentId: Schema.Types.ObjectId,
+            scores: Number,
+        },
+        status: String, // Are you still studying or graduating or saving?
+    },
     award: [{
         awardId: Schema.Types.ObjectId,
     }],
@@ -45,7 +63,7 @@ const profileSchema = new Schema({
         countryId: Schema.Types.ObjectId,
         state: String,
         permanentAddress: String,
-        temporaryAddress,
+        temporaryAddress: String,
     }],
     createdAt: {
         type: Date,
