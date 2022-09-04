@@ -23,15 +23,55 @@ exports.swagger_options = {
         paths: {
             ...authPath,
             ...userPath,
-            '/error': {
+            '/code': {
                 'get': {
                     'tags': [
-                        'ErrorCode'
+                        'Code'
                     ],
                     'description': 'List error code api.',
                     'responses': {
                         '200': {
-                            'description': 'List error code api.',
+                            'description': 'Success.',
+                            'content': {
+                                'application/json': {
+                                    'schema': {
+                                        'type': 'array'
+                                    }
+                                }
+                            }
+                        },
+                        '404': {
+                            'description': 'Page not foud.',
+                            'content': {
+                                'application/json': {
+                                    'schema': {
+                                        'type': 'array'
+                                    }
+                                }
+                            }
+                        },
+                        '401': {
+                            'description': 'Unauthorized.',
+                            'content': {
+                                'application/json': {
+                                    'schema': {
+                                        'type': 'array'
+                                    }
+                                }
+                            }
+                        },
+                        '403': {
+                            'description': 'No token provided.',
+                            'content': {
+                                'application/json': {
+                                    'schema': {
+                                        'type': 'array'
+                                    }
+                                }
+                            }
+                        },
+                        '500': {
+                            'description': 'Server interval.',
                             'content': {
                                 'application/json': {
                                     'schema': {

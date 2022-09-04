@@ -19,17 +19,10 @@ exports.error500 = (res) => {
         message: 'Server interval.'
     })
 }
-exports.error401 = (res) => {
-    return res.status(401).json({
-        status: false,
-        code: 401,
-        message: 'Unauthorized.'
-    })
-}
 exports.error404 = (res) => {
     return res.status(401).json({
         status: false,
-        code: 401,
+        code: 404,
         message: 'Page not found.'
     })
 }
