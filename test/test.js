@@ -3,6 +3,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../src/server');
 const { cryptoPass } = require('../src/until/Crypto');
+const { statusUser } = require('../src/until/Constant');
 chai.should();
 
 chai.use(chaiHttp);
@@ -30,7 +31,8 @@ describe('Users', () => {
             const user = new User({
                 email: 'admin.students@gmail.com',
                 passWord: cryptoPass('123Code#'),
-                status: 0,
+                status: statusUser.ACTIVE,
+                statusLogin: false,
                 role: 'ADMIN',
             });
             chai
@@ -50,7 +52,8 @@ describe('Users', () => {
             const user = new User({
                 email: 'admin.students@gmail.com',
                 passWord: cryptoPass('123Code#'),
-                status: 0,
+                status: statusUser.ACTIVE,
+                statusLogin: false,
                 role: 'ADMIN',
             });
             user.save((err, user) => {
@@ -72,7 +75,8 @@ describe('Users', () => {
             const body = {
                 email: 'admin.students@gmail.com',
                 passWord: cryptoPass('123Code#'),
-                status: 0,
+                status: statusUser.ACTIVE,
+                statusLogin: false,
                 role: 'ADMIN',
             }
             let user = new User(body);
@@ -96,7 +100,8 @@ describe('Users', () => {
             const user = new User({
                 email: 'admin.students@gmail.com',
                 passWord: cryptoPass('123Code#'),
-                status: 0,
+                status: statusUser.ACTIVE,
+                statusLogin: false,
                 role: 'ADMIN',
             });
             user.save((err, user) => {

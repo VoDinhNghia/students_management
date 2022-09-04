@@ -13,6 +13,7 @@ exports.login = async(req, res) => {
         const { email, passWord } = req.body;
         const findUser = await UserService.findUser(email, cryptoPass(passWord));
         if (findUser) {
+            await UserService.updateUser(findUser._id, { statusLogin: true })
             const userInfo = {
                 _id: findUser._id,
                 email: findUser.email,
@@ -31,9 +32,9 @@ exports.login = async(req, res) => {
     }
 };
 
-exports.getAllUsers = async(req, res) => {
+exports.fetchAllUsers = async(req, res) => {
     try {
-        const users = await UserService.getAllUsers();
+        const users = await UserService.fetchAllUsers();
         res.json({ data: users, status: 'success' });
     } catch (err) {
         return errorList.error500(res);
@@ -63,9 +64,9 @@ exports.createUser = async(req, res) => {
     }
 };
 
-exports.getUserById = async(req, res) => {
+exports.findUserById = async(req, res) => {
     try {
-        const user = await UserService.getUserById(req.params.id);
+        const user = await UserService.findUserById(req.params.id);
         res.json({ data: user, status: 'success' });
     } catch (err) {
         return errorList.error500(res);

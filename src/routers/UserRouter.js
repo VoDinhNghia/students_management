@@ -1,8 +1,8 @@
 const express = require('express');
 const {
-    getAllUsers,
+    fetchAllUsers,
     createUser,
-    getUserById,
+    findUserById,
     updateUser,
     deleteUser,
     login,
@@ -12,10 +12,10 @@ const router = express.Router();
 
 const AuthMiddleWare = require('../middleware/AuthMiddleware');
 
-router.route('/').get(getAllUsers);
+router.route('/').get(fetchAllUsers);
 router.route('/login').post(login);
 router.use(AuthMiddleWare.isAuth);
 router.route('/createUser').post(createUser);
-router.route('/:id').get(getUserById).put(updateUser).delete(deleteUser);
+router.route('/:id').get(findUserById).put(updateUser).delete(deleteUser);
 
 module.exports = router;

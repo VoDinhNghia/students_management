@@ -5,3 +5,8 @@ exports.roles = {
     HOMEROM_TEACHER: 'HOMEROM_TEACHER',
     LECTURER: 'LECTURER'
 }
+
+exports.statusUser = {
+    ACTIVE: 'ACTIVE',
+    INACTIVE: 'INACTIVE',
+}

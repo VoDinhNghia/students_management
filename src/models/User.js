@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const blogSchema = new Schema({
+const UserSchema = new Schema({
     email: {
         type: String,
         required: true,
@@ -10,8 +10,12 @@ const blogSchema = new Schema({
         type: String,
         required: true,
     },
+    statusLogin: {
+        type: Boolean,
+        default: false,
+    },
     status: {
-        type: Number,
+        type: String, // Inactive or active
     },
     role: {
         type: String,
@@ -27,4 +31,4 @@ const blogSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('userInfo', blogSchema);
+module.exports = mongoose.model('userInfo', UserSchema);

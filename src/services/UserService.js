@@ -7,14 +7,14 @@ exports.findUser = async(email, passWord) => {
     })
 }
 
-exports.getAllUsers = async() => {
+exports.fetchAllUsers = async() => {
     return await UserModel.find();
 };
 
 exports.createUsers = async(user) => {
     return await UserModel.create(user);
 };
-exports.getUserById = async(id) => {
+exports.findUserById = async(id) => {
     return await UserModel.findById(id);
 };
 

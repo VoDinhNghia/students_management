@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const blogSchema = new Schema({
+const ClassSchema = new Schema({
     name: {
         type: String
     },
@@ -11,13 +11,13 @@ const blogSchema = new Schema({
     classSize: {
         type: Number
     },
-    faculty: { // in which department?
+    majorId: { // in which majors?
         type: Schema.Types.ObjectId
     },
     homeroomTeacherId: {
         type: Schema.Types.ObjectId
     },
-    yearbook: [{
+    yearbook: [{ // yearbook photo
         attachmentId: Schema.Types.ObjectId
     }],
     createdAt: {
@@ -30,4 +30,4 @@ const blogSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('classInfo', blogSchema);
+module.exports = mongoose.model('classInfo', ClassSchema);
