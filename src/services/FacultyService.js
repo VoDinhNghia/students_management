@@ -16,7 +16,6 @@ exports.fetchAllFaculty = async() => {
         from: 'majors',
         localField: '_id',
         foreignField: 'facultyId',
-        fieldName: 'majorsInfo',
     }])
     return await FacultyModel.aggregate(aggregate);
 };
