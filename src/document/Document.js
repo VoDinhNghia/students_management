@@ -3,6 +3,7 @@ const { authPath } = require('./AuthPath');
 const { userPath } = require('./UserPath');
 const { codeStatus } = require('./CodeStatusPath');
 const { countryPath } = require('./CountryPath');
+const { facultyPath } = require('./FacultyPath');
 
 exports.swagger_options = {
     routePrefix: '/documentation',
@@ -22,14 +23,16 @@ exports.swagger_options = {
             { 'name': 'User' },
             { 'name': 'Code' },
             { 'name': 'Country' },
+            { 'name': 'Faculty' },
         ],
         paths: {
             ...authPath,
             ...userPath,
             ...countryPath,
+            ...facultyPath,
             ...codeStatus,
         }
     },
     basedir: __dirname,
-    apis: ['UserRouter.js', 'CountriesRouter.js']
+    apis: ['UserRouter.js', 'CountriesRouter.js', 'FacultyRouter.js']
 }

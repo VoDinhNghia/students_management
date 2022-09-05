@@ -5,17 +5,17 @@ exports.findById = async(id) => {
 };
 
 exports.fetchAllClass = async() => {
-    return await UserModel.find();
+    return await ClassModel.find();
 };
 
 exports.createClass = async(user) => {
-    return await UserModel.create(user);
+    return await ClassModel.create(user);
 };
 
 exports.updateClass = async(id, user) => {
-    return await UserModel.findByIdAndUpdate(id, user);
+    return await ClassModel.findByIdAndUpdate(id, user);
 };
 
 exports.deleteClass = async(id) => {
-    return await UserModel.findByIdAndDelete(id);
+    return await ClassModel.findByIdAndDelete(id);
 };

@@ -1,4 +1,5 @@
 const express = require('express');
+const router = express.Router();
 const {
     fetchAllUsers,
     createUser,
@@ -7,8 +8,6 @@ const {
     deleteUser,
     login,
 } = require('../controllers/UserController');
-
-const router = express.Router();
 
 const AuthMiddleWare = require('../middleware/AuthMiddleware');
 
