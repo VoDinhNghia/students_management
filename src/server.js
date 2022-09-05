@@ -9,11 +9,13 @@ app.use(urlencodedParser);
 
 const documentAPI = require('../src/routers/DocRouter');
 const UserRouter = require('../src/routers/UserRouter');
+const CountriesRouter = require('../src/routers/CountriesRouter');
 require('./config/Config').connectDB.mongoDB;
 
 app.use(express.json());
 app.use('/api-docs', documentAPI);
 app.use('/api/user', UserRouter);
+app.use('/api/country', CountriesRouter);
 
 const port = require('./config/Config').port;
 app.listen(port, () => {

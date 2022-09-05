@@ -1,8 +1,8 @@
-// const { login } = require('../controller/AuthController')
 const swaggerDefinition = require('./SwaggerDefinition');
 const { authPath } = require('./AuthPath');
 const { userPath } = require('./UserPath');
 const { codeStatus } = require('./CodeStatusPath');
+const { countryPath } = require('./CountryPath');
 
 exports.swagger_options = {
     routePrefix: '/documentation',
@@ -20,14 +20,16 @@ exports.swagger_options = {
         securityDefinitions: swaggerDefinition.securityDefinitions,
         tags: [{ 'name': 'Auth' },
             { 'name': 'User' },
-            { 'name': 'Code' }
+            { 'name': 'Code' },
+            { 'name': 'Country' },
         ],
         paths: {
             ...authPath,
             ...userPath,
+            ...countryPath,
             ...codeStatus,
         }
     },
     basedir: __dirname,
-    apis: ['UserRouter.js']
+    apis: ['UserRouter.js', 'CountriesRouter.js']
 }

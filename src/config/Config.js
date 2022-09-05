@@ -8,6 +8,8 @@ exports.environment = "local"; //local, product
 
 exports.port = process.env.PORT || 3000;
 
+exports.url = `http://localhost:3000`
+
 //configure mongoose
 exports.connectDB = {
     mongoDB: mongoose.connect(
