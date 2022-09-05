@@ -43,21 +43,23 @@ exports.fetchAllUsers = async(req, res) => {
 
 exports.createUser = async(req, res) => {
     try {
-        const { email, passWord, classId } = req.body;
+        const { email, passWord } = req.body;
         const findUser = await UserService.findUser(email, cryptoPass(passWord));
         if (findUser) {
             return errorList.commonError(res, 'User existed already.')
+        }
+        if (email && email.indexOf('@') === -1) {
+            return errorList.commonError(res, 'email not correct format.')
+        }
+        const user = await UserService.createUsers(req.body);
+        if (user) {
+            await ProfileService.createProfile({
+                ...req.body,
+                userId: user._id,
+            })
+            res.json({ status: 'Register success' });
         } else {
-            const user = await UserService.createUsers(req.body);
-            if (user) {
-                await ProfileService.createProfile({
-                    ...req.body,
-                    userId: user._id,
-                })
-                res.json({ status: 'Register success' });
-            } else {
-                return errorList.commonError(res, 'Register failed.')
-            }
+            return errorList.commonError(res, 'Register failed.')
         }
     } catch (err) {
         return errorList.error500(res);

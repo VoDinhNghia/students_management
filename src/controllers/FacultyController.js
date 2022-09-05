@@ -3,7 +3,7 @@ const errorList = require('../error/ErrorList');
 
 exports.createFaculty = async(req, res) => {
     try {
-        const { name, foundYear } = req.body;
+        const { name } = req.body;
         const existedFaculty = await FacultyService.findByname(name);
         if (existedFaculty) {
             return errorList.commonError(res, 'Faculty existed already.');
@@ -39,7 +39,7 @@ exports.findByIdFaculty = async(req, res) => {
     }
 }
 
-exports.updateFaculty = async(res, req) => {
+exports.updateFaculty = async(req, res) => {
     try {
         const { id } = req.params;
         if (id) {

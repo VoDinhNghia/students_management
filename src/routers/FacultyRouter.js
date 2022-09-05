@@ -13,6 +13,7 @@ const AuthMiddleWare = require('../middleware/AuthMiddleware');
 router.use(AuthMiddleWare.isAuth);
 router.route('/list').get(fetchAllFaculty);
 router.route('/create').post(createFaculty);
-router.route('/:id').get(findByIdFaculty).put(updateFaculty).delete(deleteFaculty);
+router.route('/:id').get(findByIdFaculty).delete(deleteFaculty);
+router.route('/update').put(updateFaculty);
 
 module.exports = router;

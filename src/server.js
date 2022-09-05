@@ -12,12 +12,14 @@ const documentAPI = require('../src/routers/DocRouter');
 const UserRouter = require('../src/routers/UserRouter');
 const CountriesRouter = require('../src/routers/CountriesRouter');
 const FacultyRouter = require('../src/routers/FacultyRouter');
+const MajorsRouter = require('../src/routers/MajorsRouter');
 
 app.use(express.json());
 app.use('/api-docs', documentAPI);
 app.use('/api/user', UserRouter);
 app.use('/api/country', CountriesRouter);
 app.use('/api/faculty', FacultyRouter);
+app.use('/api/majors', MajorsRouter);
 
 const port = require('./config/Config').port;
 app.listen(port, () => {
