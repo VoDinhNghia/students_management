@@ -11,15 +11,15 @@ const subjectSchema = new Schema({
         required: true,
     },
     openTime: {
-        type: Datetime,
+        type: Date,
     },
     closeTime: {
-        type: Datetime,
+        type: Date,
     },
     schedule: {
         learnDate: String, // monday,....
-        startDate: Datetime,
-        endDate: DateTime,
+        startDate: Date,
+        endDate: Date,
         semester: Schema.Types.ObjectId,
     },
     size: { // total student

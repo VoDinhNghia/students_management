@@ -1,6 +1,6 @@
 const swaggerDefinition = require('./SwaggerDefinition');
 const { authPath } = require('./AuthPath');
-const { userPath } = require('./UserPath');
+const { userList, createUser, updateUser, findUserById, deleteUser } = require('./UserPath');
 const { codeStatus } = require('./CodeStatusPath');
 const { countryPath } = require('./CountryPath');
 const { facultyPath } = require('./FacultyPath');
@@ -29,7 +29,11 @@ exports.swagger_options = {
         ],
         paths: {
             ...authPath,
-            ...userPath,
+            ...userList,
+            ...createUser,
+            ...updateUser,
+            ...findUserById,
+            ...deleteUser,
             ...countryPath,
             ...facultyPath,
             ...majorsPath,

@@ -6,11 +6,17 @@ exports.createMajors = async(req, res) => {
         const { name } = req.body;
         const existedMajors = await MajorsService.findByname(name);
         if (existedMajors) {
-            return errorList.commonError(res, 'Majors existed already.');
-        } else {
-            const result = await MajorsService.createMajors(req.body);
-            res.json({ data: result, status: 'Create Majors success.' });
+            return errorList.commonError400(res, 'Majors existed already.');
         }
+        const result = await MajorsService.createMajors(req.body);
+        if (!result) {
+            return errorList.commonError400(res, 'Can not create majors.')
+        }
+        res.json({
+            statusCode: 200,
+            data: result,
+            message: 'Create majors success.'
+        });
     } catch (error) {
         return errorList.error500(res);
     }
@@ -19,7 +25,11 @@ exports.createMajors = async(req, res) => {
 exports.fetchAllMajors = async(req, res) => {
     try {
         const result = await MajorsService.fetchAllMajors();
-        res.json({ data: result, status: 'Get list Majors success.' });
+        res.json({
+            statusCode: 200,
+            data: result,
+            message: 'Get list majors success.'
+        });
     } catch (error) {
         return errorList.error500(res);
     }
@@ -30,9 +40,13 @@ exports.findByIdMajors = async(req, res) => {
         const { id } = req.params;
         if (id) {
             const result = await MajorsService.findById(id);
-            res.json({ data: result, status: 'Get Majors success.' });
+            res.json({
+                statusCode: 200,
+                data: result,
+                message: 'Get Majors success.'
+            });
         } else {
-            return errorList.commonError(res, 'id must provided.')
+            return errorList.commonError400(res, 'id must provided.')
         }
     } catch (error) {
         return errorList.error500(res);
@@ -46,12 +60,16 @@ exports.updateMajors = async(req, res) => {
             const existedMajors = await MajorsService.findById(id);
             if (existedMajors) {
                 const result = await MajorsService.updateMajors(req.body);
-                res.json({ data: result, status: 'Get list Majors success.' });
+                res.json({
+                    statusCode: 200,
+                    data: result,
+                    message: 'Get list Majors success.'
+                });
             } else {
-                return errorList.commonError(res, 'Majors not found.')
+                return errorList.commonError400(res, 'Majors not found.')
             }
         } else {
-            return errorList.commonError(res, 'id must provided.')
+            return errorList.commonError400(res, 'id must provided.')
         }
     } catch (error) {
         return errorList.error500(res);
@@ -65,12 +83,16 @@ exports.deleteMajors = async(req, res) => {
             const existedMajors = await MajorsService.findById(id);
             if (existedMajors) {
                 const result = await MajorsService.deleteMajors(id);
-                res.json({ data: result, status: 'Delete Majors success.' });
+                res.json({
+                    statusCode: 200,
+                    data: result,
+                    message: 'Delete Majors success.'
+                });
             } else {
-                return errorList.commonError(res, 'Majors not found.')
+                return errorList.commonError400(res, 'Majors not found.')
             }
         } else {
-            return errorList.commonError(res, 'id must provided.')
+            return errorList.commonError400(res, 'id must provided.')
         }
     } catch (err) {
         return errorList.error500(res);

@@ -3,7 +3,7 @@ const ProfileService = require('../services/ProfileService');
 const jwtHelper = require("../helper/jwt.Helper");
 const errorList = require('../error/ErrorList');
 const { cryptoPass } = require('../until/Crypto');
-const ConfigKeySecret = require("../config/Config").ConfigKeySecret
+const ConfigKeySecret = require("../config/Config").ConfigKeySecret;
 
 const accessTokenLife = process.env.ACCESS_TOKEN_LIFE || ConfigKeySecret.accessTokenLife;
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || ConfigKeySecret.accessTokenSecret;
@@ -11,22 +11,29 @@ const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || ConfigKeySecret.acc
 exports.login = async(req, res) => {
     try {
         const { email, passWord } = req.body;
-        const findUser = await UserService.findUser(email, cryptoPass(passWord));
-        if (findUser) {
-            await UserService.updateUser(findUser._id, { statusLogin: true })
-            const userInfo = {
-                _id: findUser._id,
-                email: findUser.email,
-            }
-            const accessToken = await jwtHelper.generateToken(userInfo, accessTokenSecret, accessTokenLife);
-            res.json({
-                data: findUser,
-                accessToken,
-                message: 'Login success!'
-            });
-        } else {
-            return errorList.commonError(res, 'User not found.');
+        const findUser = await UserService.findUserLogin(email, cryptoPass(passWord));
+        if (!findUser) {
+            return errorList.commonError400(res, 'User not found.');
         }
+        const historyLogin = findUser.historyLogin || [];
+        historyLogin.push({
+            divice: req.headers['user-agent'],
+            date: Date.now(),
+            host: req.headers.host,
+            origin: req.headers.origin,
+        })
+        const result = await UserService.updateUser(findUser._id, { statusLogin: true, historyLogin, });
+        const userInfo = {
+            _id: findUser._id,
+            email: findUser.email,
+        }
+        const accessToken = await jwtHelper.generateToken(userInfo, accessTokenSecret, accessTokenLife);
+        res.json({
+            statusCode: 200,
+            data: result,
+            accessToken,
+            message: 'Login success.'
+        });
     } catch (error) {
         return errorList.error500(res);
     }
@@ -34,8 +41,12 @@ exports.login = async(req, res) => {
 
 exports.fetchAllUsers = async(req, res) => {
     try {
-        const users = await UserService.fetchAllUsers();
-        res.json({ data: users, status: 'success' });
+        const userList = await UserService.fetchAllUsers();
+        res.json({
+            statusCode: 200,
+            data: userList,
+            message: 'Get list user success.'
+        });
     } catch (err) {
         return errorList.error500(res);
     }
@@ -46,20 +57,24 @@ exports.createUser = async(req, res) => {
         const { email, passWord } = req.body;
         const findUser = await UserService.findUser(email, cryptoPass(passWord));
         if (findUser) {
-            return errorList.commonError(res, 'User existed already.')
+            return errorList.commonError400(res, 'User existed already.');
         }
         if (email && email.indexOf('@') === -1) {
-            return errorList.commonError(res, 'email not correct format.')
+            return errorList.commonError400(res, 'email not correct format.');
         }
-        const user = await UserService.createUsers(req.body);
+        const user = await UserService.createUser(req.body);
         if (user) {
             await ProfileService.createProfile({
                 ...req.body,
                 userId: user._id,
             })
-            res.json({ status: 'Register success' });
+            res.json({
+                statusCode: 200,
+                data: user,
+                message: 'Create user success.'
+            });
         } else {
-            return errorList.commonError(res, 'Register failed.')
+            return errorList.commonError400(res, 'Register failed.');
         }
     } catch (err) {
         return errorList.error500(res);
@@ -68,8 +83,16 @@ exports.createUser = async(req, res) => {
 
 exports.findUserById = async(req, res) => {
     try {
-        const user = await UserService.findUserById(req.params.id);
-        res.json({ data: user, status: 'success' });
+        const { id } = req.params;
+        if (!id) {
+            return errorList.commonError400(res, 'id must provided.');
+        }
+        const findUser = await UserService.findUserById(id);
+        res.json({
+            statusCode: 200,
+            data: findUser,
+            message: 'Find user success.'
+        });
     } catch (err) {
         return errorList.error500(res);
     }
@@ -77,8 +100,20 @@ exports.findUserById = async(req, res) => {
 
 exports.updateUser = async(req, res) => {
     try {
-        const user = await UserService.updateUser(req.params.id, req.body);
-        res.json({ data: user, status: 'success' });
+        const { id } = req.body;
+        if (!id) {
+            return errorList.commonError400(res, 'id must provided.');
+        }
+        const findUser = await UserService.findUserById(id);
+        if (!findUser) {
+            return errorList.commonError400(res, 'User not found.');
+        }
+        const result = await UserService.updateUser(id, req.body);
+        res.json({
+            statusCode: 200,
+            data: result,
+            message: 'Update user success.'
+        });
     } catch (err) {
         return errorList.error500(res);
     }
@@ -86,8 +121,19 @@ exports.updateUser = async(req, res) => {
 
 exports.deleteUser = async(req, res) => {
     try {
-        const user = await UserService.deleteUser(req.params.id);
-        res.json({ data: user, status: 'success' });
+        const { id } = req.params;
+        if (!id) {
+            return errorList.commonError400(res, 'id must provided.');
+        }
+        const findUser = await UserService.findUserById(id);
+        if (!findUser) {
+            return errorList.commonError400(res, 'User not found.');
+        }
+        await UserService.deleteUser(id);
+        res.json({
+            statusCode: 200,
+            message: 'Delete user success.'
+        });
     } catch (err) {
         return errorList.error500(res);
     }

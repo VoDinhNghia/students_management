@@ -11,10 +11,12 @@ const {
 
 const AuthMiddleWare = require('../middleware/AuthMiddleware');
 
-router.route('/').get(fetchAllUsers);
 router.route('/login').post(login);
 router.use(AuthMiddleWare.isAuth);
-router.route('/createUser').post(createUser);
-router.route('/:id').get(findUserById).put(updateUser).delete(deleteUser);
+router.route('/list').get(fetchAllUsers);
+router.route('/create').post(createUser);
+router.route('/get-by-id/:id').get(findUserById);
+router.route('/delete/:id').delete(deleteUser);
+router.route('/update').post(updateUser);
 
 module.exports = router;

@@ -21,6 +21,12 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
+    historyLogin: [{
+        divice: String,
+        date: Date,
+        host: String,
+        origin: String,
+    }],
     createdAt: {
         type: Date,
         default: Date.now,

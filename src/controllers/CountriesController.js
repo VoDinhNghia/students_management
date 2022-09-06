@@ -9,9 +9,13 @@ exports.fetchAllCountries = async(req, res) => {
             for (const obj of countriesList) {
                 obj.flag = `${urlConfig}${obj.flag}`
             }
-            res.json({ data: countriesList, status: 'Get list countries success.' });
+            res.json({
+                statusCode: 200,
+                data: countriesList,
+                message: 'Get list countries success.'
+            });
         } else {
-            return errorList.commonError(res, 'Can not get list countries.');
+            return errorList.commonError400(res, 'Can not get list countries.');
         }
     } catch (err) {
         return errorList.error500(res);
