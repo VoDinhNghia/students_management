@@ -1,4 +1,4 @@
-exports.facultyPath = {
+exports.createFaculty = {
     '/faculty/create': {
         'post': {
             'tags': [
@@ -40,7 +40,10 @@ exports.facultyPath = {
                 }
             }
         }
-    },
+    }
+}
+
+exports.facultyList = {
     '/faculty/list': {
         'get': {
             'tags': [
@@ -71,5 +74,5 @@ exports.facultyPath = {
                 }
             }
         }
-    },
+    }
 }

@@ -50,7 +50,8 @@ exports.createUser = {
                     'email': 'string',
                     'passWord': 'string',
                     'mobile': 365728889,
-                    'gender': 'Male'
+                    'gender': 'Male',
+                    "createBy": "63189a1662ed22b553acd703"
                 },
                 'required': true
             }, {

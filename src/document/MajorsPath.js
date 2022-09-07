@@ -1,4 +1,4 @@
-exports.majorsPath = {
+exports.createMajors = {
     '/majors/create': {
         'post': {
             'tags': [
@@ -41,7 +41,10 @@ exports.majorsPath = {
                 }
             }
         }
-    },
+    }
+}
+
+exports.majorsList = {
     '/majors/list': {
         'get': {
             'tags': [
@@ -72,7 +75,10 @@ exports.majorsPath = {
                 }
             }
         }
-    },
+    }
+}
+
+exports.updateMajors = {
     "/majors/update": {
         "put": {
             "tags": [
@@ -114,5 +120,5 @@ exports.majorsPath = {
                 }
             }
         }
-    },
+    }
 }

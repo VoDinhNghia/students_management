@@ -58,13 +58,13 @@ const profileSchema = new Schema({
     award: [{
         awardId: Schema.Types.ObjectId,
     }],
-    location: [{
+    location: {
         province: String,
         countryId: Schema.Types.ObjectId,
         state: String,
         permanentAddress: String,
         temporaryAddress: String,
-    }],
+    },
     createdAt: {
         type: Date,
         default: Date.now,
@@ -75,4 +75,4 @@ const profileSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('profileInfo', profileSchema);
+module.exports = mongoose.model('profileInfos', profileSchema);

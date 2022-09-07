@@ -6,7 +6,7 @@ exports.lookup = (fieldArray = []) => {
                 from: obj.from,
                 localField: obj.localField,
                 foreignField: obj.foreignField,
-                as: `${obj.from}Info`,
+                as: `${obj.from}`,
             },
         })
     }

@@ -2,9 +2,9 @@ const swaggerDefinition = require('./SwaggerDefinition');
 const { authPath } = require('./AuthPath');
 const { userList, createUser, updateUser, findUserById, deleteUser } = require('./UserPath');
 const { codeStatus } = require('./CodeStatusPath');
-const { countryPath } = require('./CountryPath');
-const { facultyPath } = require('./FacultyPath');
-const { majorsPath } = require('./MajorsPath');
+const { countryList } = require('./CountryPath');
+const { createFaculty, facultyList } = require('./FacultyPath');
+const { createMajors, majorsList, updateMajors } = require('./MajorsPath');
 
 exports.swagger_options = {
     routePrefix: '/documentation',
@@ -34,9 +34,12 @@ exports.swagger_options = {
             ...updateUser,
             ...findUserById,
             ...deleteUser,
-            ...countryPath,
-            ...facultyPath,
-            ...majorsPath,
+            ...countryList,
+            ...createFaculty,
+            ...facultyList,
+            ...createMajors,
+            ...majorsList,
+            ...updateMajors,
             ...codeStatus,
         }
     },

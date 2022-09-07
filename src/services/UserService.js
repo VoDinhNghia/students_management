@@ -1,5 +1,6 @@
 const UserModel = require('../models/User');
 const { statusUser } = require('../until/Constant');
+const { lookup } = require('./Lookup');
 
 exports.findUserLogin = async(email, passWord) => {
     return await UserModel.findOne({
@@ -9,8 +10,17 @@ exports.findUserLogin = async(email, passWord) => {
     });
 }
 
+exports.findUserByEmail = async(email) => {
+    return await UserModel.findOne({ email });
+}
+
 exports.fetchAllUsers = async() => {
-    return await UserModel.find();
+    const aggregate = lookup([{
+        from: 'profileinfos',
+        localField: '_id',
+        foreignField: 'userId',
+    }])
+    return await UserModel.aggregate(aggregate);
 };
 
 exports.createUser = async(user) => {

@@ -1,4 +1,4 @@
-exports.countryPath = {
+exports.countryList = {
     '/country/list': {
         'get': {
             'tags': [
