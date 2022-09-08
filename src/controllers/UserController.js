@@ -5,6 +5,7 @@ const errorList = require('../error/ErrorList');
 const { cryptoPass } = require('../until/Crypto');
 const ConfigKeySecret = require('../config/Config').ConfigKeySecret;
 const { roles } = require('../until/Constant');
+const { validateEmail } = require('../until/validateEmail');
 
 const accessTokenLife = process.env.ACCESS_TOKEN_LIFE || ConfigKeySecret.accessTokenLife;
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || ConfigKeySecret.accessTokenSecret;
@@ -17,6 +18,9 @@ exports.login = async(req, res) => {
             return errorList.commonError400(res, 'User not found.');
         }
         const historyLogin = findUser.historyLogin || [];
+        if (historyLogin.length > 5) {
+            historyLogin = [];
+        }
         historyLogin.push({
             divice: req.headers['user-agent'],
             date: Date.now(),
@@ -42,13 +46,23 @@ exports.login = async(req, res) => {
 
 exports.fetchAllUsers = async(req, res) => {
     try {
-        const userList = await UserService.fetchAllUsers();
+        const { userId } = req.query;
+        const findUser = await UserService.findUserById(userId);
+        if (!findUser) {
+            return errorList.commonError400(res, 'User not found.');
+        }
+        if (findUser.role !== roles.ADMIN) {
+            return errorList.commonError400(res, 'You are not permission get all user.')
+        }
+        const { data, total } = await UserService.fetchAllUsers(req.query);
         res.json({
             statusCode: 200,
-            data: userList,
+            data,
+            total,
             message: 'Get list user success.'
         });
     } catch (err) {
+        console.log(err)
         return errorList.error500(res);
     }
 };
@@ -58,16 +72,17 @@ exports.createUser = async(req, res) => {
         const { email, passWord, createBy } = req.body;
         const createByInfo = await UserService.findUserById(createBy);
         if (!createByInfo) {
-            return errorList.commonError400(res, 'Please id of createBy.');
+            return errorList.commonError400(res, 'CreateBy not found.');
         }
         if (createByInfo.role === roles.ADMIN) {
-            const findUser = await UserService.findUserLogin(email, cryptoPass(passWord));
+            const findUser = await UserService.findUserByEmail(email);
             if (findUser) {
-                return errorList.commonError400(res, 'User existed already.');
+                return errorList.commonError400(res, 'Email existed already.');
             }
-            if (email && email.indexOf('@') === -1) {
+            if (email && !validateEmail(email)) {
                 return errorList.commonError400(res, 'email not correct format.');
             }
+            req.body.passWord = cryptoPass(passWord);
             const user = await UserService.createUser(req.body);
             if (user) {
                 await ProfileService.createProfile({

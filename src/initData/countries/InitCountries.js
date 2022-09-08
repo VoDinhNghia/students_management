@@ -1,4 +1,4 @@
-// run node src/init/countries/InitData.js or cd folder and node InitData.js to create data for countries collection
+// run node src/initData/countries/InitCountries.js or cd folder and node InitCountries.js to create data for countries collection
 const fs = require('fs');
 require('../../config/Config').connectDB.mongoDB;
 const CountryService = require('../../services/CountryService');

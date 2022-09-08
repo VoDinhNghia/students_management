@@ -6,15 +6,36 @@ exports.userList = {
             ],
             'description': 'Get list user.',
             'parameters': [{
-                "name": "Authorization",
-                "in": "header",
-                "description": "Authorization bearer token",
-                "required": true
+                'name': 'userId',
+                'in': 'query',
+                'example': {
+                    'userId': '63189a1662ed22b553acd703'
+                },
+                'required': true
+            }, {
+                'name': 'limit',
+                'in': 'query',
+                'example': {
+                    'limit': 10
+                },
+                'required': true
+            }, {
+                'name': 'page',
+                'in': 'query',
+                'example': {
+                    'page': 1
+                },
+                'required': true
+            }, {
+                'name': 'Authorization',
+                'in': 'header',
+                'description': 'Authorization bearer token',
+                'required': true
             }],
-            "security": [{
-                "type": "http",
-                "scheme": "bearer",
-                "bearerFormat": "JWT",
+            'security': [{
+                'type': 'http',
+                'scheme': 'bearer',
+                'bearerFormat': 'JWT',
             }],
             'responses': {
                 '200': {
@@ -51,7 +72,7 @@ exports.createUser = {
                     'passWord': 'string',
                     'mobile': 365728889,
                     'gender': 'Male',
-                    "createBy": "63189a1662ed22b553acd703"
+                    'createBy': '63189a1662ed22b553acd703'
                 },
                 'required': true
             }, {
