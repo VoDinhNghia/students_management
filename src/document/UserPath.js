@@ -53,6 +53,102 @@ exports.userList = {
     },
 }
 
+exports.lecturerList = {
+    '/user/list-lecturer': {
+        'get': {
+            'tags': [
+                'User'
+            ],
+            'description': 'Get list lecturer.',
+            'parameters': [{
+                'name': 'limit',
+                'in': 'query',
+                'example': {
+                    'limit': 10
+                },
+                'required': true
+            }, {
+                'name': 'page',
+                'in': 'query',
+                'example': {
+                    'page': 1
+                },
+                'required': true
+            }, {
+                'name': 'Authorization',
+                'in': 'header',
+                'description': 'Authorization bearer token',
+                'required': true
+            }],
+            'security': [{
+                'type': 'http',
+                'scheme': 'bearer',
+                'bearerFormat': 'JWT',
+            }],
+            'responses': {
+                '200': {
+                    'description': 'Get list lecturer susscess.',
+                    'content': {
+                        'application/json': {
+                            'schema': {
+                                'type': 'array'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+}
+
+exports.studentList = {
+    '/user/list-student': {
+        'get': {
+            'tags': [
+                'User'
+            ],
+            'description': 'Get list student.',
+            'parameters': [{
+                'name': 'limit',
+                'in': 'query',
+                'example': {
+                    'limit': 10
+                },
+                'required': true
+            }, {
+                'name': 'page',
+                'in': 'query',
+                'example': {
+                    'page': 1
+                },
+                'required': true
+            }, {
+                'name': 'Authorization',
+                'in': 'header',
+                'description': 'Authorization bearer token',
+                'required': true
+            }],
+            'security': [{
+                'type': 'http',
+                'scheme': 'bearer',
+                'bearerFormat': 'JWT',
+            }],
+            'responses': {
+                '200': {
+                    'description': 'Get list student susscess.',
+                    'content': {
+                        'application/json': {
+                            'schema': {
+                                'type': 'array'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+}
+
 exports.createUser = {
     '/user/create': {
         'post': {
@@ -72,7 +168,8 @@ exports.createUser = {
                     'passWord': 'string',
                     'mobile': 365728889,
                     'gender': 'Male',
-                    'createBy': '63189a1662ed22b553acd703'
+                    'createBy': '63189a1662ed22b553acd703',
+                    'role': 'STUDENT',
                 },
                 'required': true
             }, {

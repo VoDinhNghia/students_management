@@ -1,14 +1,49 @@
+const { query } = require('express');
 const { Types } = require('mongoose');
 const UserModel = require('../models/User');
 const { statusUser } = require('../until/Constant');
 const { lookup } = require('./Lookup');
 
+exports.aggregateCommon = (match) => {
+    const aggregate = [];
+    if (match) {
+        aggregate.push({
+            $match: match
+        });
+    }
+    const lookupAgg = lookup([{
+        from: 'profileinfos',
+        localField: '_id',
+        foreignField: 'userId',
+    }]);
+    const project = [{
+        $project: {
+            passWord: 0,
+        }
+    }];
+    return [...aggregate, ...lookupAgg, ...project];
+}
+
+exports.paginationAgg = (limit, page, aggregate = []) => {
+    return [
+        ...aggregate,
+        {
+            $skip: Number(limit) * (Number(page) - 1),
+        },
+        {
+            $limit: Number(limit),
+        }
+    ]
+}
+
 exports.findUserLogin = async(email, passWord) => {
-    return await UserModel.findOne({
+    const aggregate = this.aggregateCommon({
         email,
         passWord,
         status: statusUser.ACTIVE,
     });
+    const result = await UserModel.aggregate(aggregate);
+    return result && result.length > 0 ? result[0] : null;
 }
 
 exports.findUserByEmail = async(email) => {
@@ -17,29 +52,10 @@ exports.findUserByEmail = async(email) => {
 
 exports.fetchAllUsers = async(query) => {
     const { userId, limit, page } = query;
-    let aggregate = []
-    const lookupAgg = lookup([{
-        from: 'profileinfos',
-        localField: '_id',
-        foreignField: 'userId',
-    }]);
-    if (userId) {
-        aggregate.push({
-            $match: { _id: { $ne: Types.ObjectId(userId) } }
-        });
-    }
-    aggregate = [...aggregate, ...lookupAgg];
+    let aggregate = this.aggregateCommon({ _id: { $ne: Types.ObjectId(userId) } });
     const aggregateTotal = [...aggregate, { $group: { _id: null, count: { $sum: 1 } } }];
     if (limit && page) {
-        aggregate = [
-            ...aggregate,
-            {
-                $skip: Number(limit) * (Number(page) - 1),
-            },
-            {
-                $limit: Number(limit),
-            }
-        ]
+        aggregate = this.paginationAgg(limit, page, aggregate);
     }
     const userList = await UserModel.aggregate(aggregate);
     const countDocument = await UserModel.aggregate(aggregateTotal);
@@ -54,15 +70,37 @@ exports.createUser = async(user) => {
     return await UserModel.create(user);
 };
 exports.findUserById = async(id) => {
-    return await UserModel.findById(id);
+    const aggregate = this.aggregateCommon({ _id: Types.ObjectId(id) });
+    const result = await UserModel.aggregate(aggregate);
+    return result && result.length > 0 ? result[0] : null;
 };
 
 exports.updateUser = async(id, updateInfo) => {
-    const findUser = await UserModel.findById(id)
-    findUser.set(updateInfo)
-    return await findUser.save();
+    const updateUser = await UserModel.findByIdAndUpdate({ _id: Types.ObjectId(id) }, updateInfo);
+    if (!updateUser) {
+        return null;
+    }
+    const aggregate = this.aggregateCommon({ _id: Types.ObjectId(id) });
+    const result = await UserModel.aggregate(aggregate);
+    return result && result.length > 0 ? result[0] : null;
 };
 
 exports.deleteUser = async(id) => {
     return await UserModel.findByIdAndDelete(id);
+};
+
+exports.fetchByRole = async(query, role) => {
+    const { limit, page } = query;
+    let aggregate = this.aggregateCommon({ role });
+    const aggregateTotal = [...aggregate, { $group: { _id: null, count: { $sum: 1 } } }];
+    if (limit && page) {
+        aggregate = this.paginationAgg(limit, page, aggregate);
+    }
+    const lecturerList = await UserModel.aggregate(aggregate);
+    const countDocument = await UserModel.aggregate(aggregateTotal);
+    const total = countDocument && countDocument.length > 0 ? countDocument[0].count : 0;
+    return {
+        data: lecturerList,
+        total,
+    }
 };
