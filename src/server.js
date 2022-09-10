@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 app.use(express.static('public'));
 app.use(express.static(__dirname + '/public'));
@@ -7,6 +8,8 @@ app.use(bodyParser.json());
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(urlencodedParser);
 require('./config/Config').connectDB.mongoDB;
+
+app.use(cors(require('./config/WhiteList').corsOptionsDelegate));
 
 const documentAPI = require('../src/routers/DocRouter');
 const UserRouter = require('../src/routers/UserRouter');
