@@ -1,5 +1,5 @@
 exports.lookup = (fieldArray = []) => {
-    const result = []
+    const result = [];
     for (const obj of fieldArray) {
         result.push({
             $lookup: {
@@ -10,5 +10,5 @@ exports.lookup = (fieldArray = []) => {
             },
         })
     }
-    return result
+    return result;
 }

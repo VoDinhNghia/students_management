@@ -2,10 +2,10 @@ const UserService = require('../../services/UserService');
 const ProfileService = require('../../services/ProfileService');
 const jwtHelper = require('../../helper/jwt.Helper');
 const errorList = require('../../error/ErrorList');
-const { cryptoPass } = require('../../until/Crypto');
+const { cryptoPass } = require('../../common/Crypto');
 const ConfigKeySecret = require('../../config/Config').ConfigKeySecret;
-const { roles } = require('../../until/Constant');
-const { validateEmail } = require('../../until/validateEmail');
+const { roles } = require('../../common/Constant');
+const { validateEmail } = require('../../common/validateEmail');
 
 const accessTokenLife = process.env.ACCESS_TOKEN_LIFE || ConfigKeySecret.accessTokenLife;
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || ConfigKeySecret.accessTokenSecret;

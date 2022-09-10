@@ -3,8 +3,8 @@ const fs = require('fs');
 require('../../config/Config').connectDB.mongoDB;
 const UserService = require('../../services/UserService');
 const ProfileService = require('../../services/ProfileService');
-const { roles, statusUser } = require('../../until/Constant');
-const { cryptoPass } = require('../../until/Crypto');
+const { roles, statusUser } = require('../../common/Constant');
+const { cryptoPass } = require('../../common/Crypto');
 
 exports.initAdmin = async() => {
     const info = {

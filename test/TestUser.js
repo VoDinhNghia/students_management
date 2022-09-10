@@ -2,8 +2,8 @@ const User = require('../src/models/User');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../src/server');
-const { cryptoPass } = require('../src/until/Crypto');
-const { statusUser } = require('../src/until/Constant');
+const { cryptoPass } = require('../src/common/Crypto');
+const { statusUser } = require('../src/common/Constant');
 chai.should();
 
 chai.use(chaiHttp);

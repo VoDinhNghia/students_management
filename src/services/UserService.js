@@ -1,7 +1,7 @@
 const { query } = require('express');
 const { Types } = require('mongoose');
 const UserModel = require('../models/User');
-const { statusUser } = require('../until/Constant');
+const { statusUser } = require('../common/Constant');
 const { lookup } = require('./Lookup');
 
 exports.aggregateCommon = (match) => {

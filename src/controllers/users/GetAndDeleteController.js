@@ -1,6 +1,6 @@
 const UserService = require('../../services/UserService');
 const errorList = require('../../error/ErrorList');
-const { roles } = require('../../until/Constant');
+const { roles } = require('../../common/Constant');
 
 exports.deleteUser = async(req, res) => {
     try {
