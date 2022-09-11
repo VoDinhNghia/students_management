@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const attachmentSchema = new Schema({
-    name: {
+    originalName: {
+        type: String,
+    },
+    fileName: {
         type: String,
     },
     path: {
