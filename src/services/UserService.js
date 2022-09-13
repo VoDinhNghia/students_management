@@ -69,6 +69,7 @@ exports.fetchAllUsers = async(query) => {
 exports.createUser = async(user) => {
     return await UserModel.create(user);
 };
+
 exports.findUserById = async(id) => {
     const aggregate = this.aggregateCommon({ _id: Types.ObjectId(id) });
     const result = await UserModel.aggregate(aggregate);

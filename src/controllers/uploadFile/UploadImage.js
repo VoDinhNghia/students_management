@@ -22,7 +22,7 @@ const checkFileType = (file, cb) => {
     }
 }
 
-exports.upload = multer({
+exports.uploadFileImage = multer({
     storage: StorageImage,
     limits: { fileSize: 1000000 },
     fileFilter: (req, file, cb) => {

@@ -13,6 +13,12 @@ const { codeStatus } = require('./CodeStatusPath');
 const { countryList } = require('./CountryPath');
 const { createFaculty, facultyList } = require('./FacultyPath');
 const { createMajors, majorsList, updateMajors } = require('./MajorsPath');
+const {
+    attachmentList,
+    uploadAttachmentImage,
+    uploadAttachmentPdf,
+    findAttachmentById
+} = require('./AttachmentPath');
 
 exports.swagger_options = {
     routePrefix: '/documentation',
@@ -34,6 +40,7 @@ exports.swagger_options = {
             { 'name': 'Country' },
             { 'name': 'Faculty' },
             { 'name': 'Majors' },
+            { 'name': 'Attachment' }
         ],
         paths: {
             ...authPath,
@@ -50,6 +57,10 @@ exports.swagger_options = {
             ...createMajors,
             ...majorsList,
             ...updateMajors,
+            ...attachmentList,
+            ...uploadAttachmentImage,
+            ...uploadAttachmentPdf,
+            ...findAttachmentById,
             ...codeStatus,
         }
     },

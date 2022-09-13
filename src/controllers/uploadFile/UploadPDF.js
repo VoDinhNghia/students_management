@@ -22,9 +22,9 @@ const checkFileType = (file, cb) => {
     }
 }
 
-exports.upload = multer({
+exports.uploadFilePdf = multer({
     storage: StorageImage,
-    limits: { fileSize: 1000000 },
+    limits: { fileSize: 10000000 },
     fileFilter: (req, file, cb) => {
         checkFileType(file, cb);
     }
