@@ -3,7 +3,8 @@ exports.roles = {
     STUDENT: 'STUDENT',
     CLASS_MONITOR: 'CLASS_MONITOR',
     HOMEROM_TEACHER: 'HOMEROM_TEACHER',
-    LECTURER: 'LECTURER'
+    LECTURER: 'LECTURER',
+    LIBRARIAN: 'LIBRARIAN'
 }
 
 exports.statusUser = {
@@ -33,4 +34,11 @@ exports.statusStudent = {
     GRAD: 'GRADUATE',
     RESERVE: 'RESERVE',
     LEAVE: 'LEAVE',
+}
+
+exports.libraryServiceType = {
+    BORROW_BOOK: 'BORROW_BOOK',
+    BORROW_MAGAZINE: 'BORROW_MAGAZINE',
+    BORROW_ROOM: 'BORROW_ROOM',
+    RESERVE_SEAT: 'RESERVE_SEAT'
 }
