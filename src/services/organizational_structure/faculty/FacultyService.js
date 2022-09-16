@@ -1,5 +1,5 @@
-const FacultyModel = require('../models/Faculty');
-const { lookup } = require('./Lookup');
+const FacultyModel = require('../../../models/organizational_structure/faculty/Faculty');
+const { lookup } = require('../../general/Lookup');
 
 exports.findById = async(id) => {
     return await FacultyModel.findById(id);

@@ -1,4 +1,4 @@
-const CountriesModel = require('../models/Countries');
+const CountriesModel = require('../../models/general/Countries');
 
 exports.createCountry = async(country) => {
     return await CountriesModel.create(country);

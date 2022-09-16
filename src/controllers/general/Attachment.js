@@ -1,8 +1,8 @@
-const AttachmentService = require('../services/AttachmentService');
-const UserService = require('../services/UserService');
-const errorList = require('../error/ErrorList');
-const urlConfig = require('../config/Config').url;
-const { roles } = require('../common/Constant');
+const AttachmentService = require('../../services/general/AttachmentService');
+const UserService = require('../../services/users/UserService');
+const errorList = require('../../error/ErrorList');
+const urlConfig = require('../../config/Config').url;
+const { roles } = require('../../common/Constant');
 
 exports.uploadImage = async(req, res) => {
     try {

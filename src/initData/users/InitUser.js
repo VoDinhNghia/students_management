@@ -1,8 +1,8 @@
 // run node src/initData/users/InitUser.js or cd folder and node InitUser.js to create data for userinfos collection
 const fs = require('fs');
 require('../../config/Config').connectDB.mongoDB;
-const UserService = require('../../services/UserService');
-const ProfileService = require('../../services/ProfileService');
+const UserService = require('../../services/users/UserService');
+const ProfileService = require('../../services/users/ProfileService');
 const { roles, statusUser } = require('../../common/Constant');
 const { cryptoPass } = require('../../common/Crypto');
 

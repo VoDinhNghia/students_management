@@ -6,7 +6,7 @@ const {
     findByIdFaculty,
     updateFaculty,
     deleteFaculty,
-} = require('../controllers/FacultyController');
+} = require('../controllers/organizational_structure/faculty/FacultyController');
 
 const AuthMiddleWare = require('../middleware/AuthMiddleware');
 

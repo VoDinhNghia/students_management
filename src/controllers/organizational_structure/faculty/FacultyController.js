@@ -1,5 +1,5 @@
-const FacultyService = require('../services/FacultyService');
-const errorList = require('../error/ErrorList');
+const FacultyService = require('../../../services/organizational_structure/faculty/FacultyService');
+const errorList = require('../../../error/ErrorList');
 
 exports.createFaculty = async(req, res) => {
     try {

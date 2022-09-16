@@ -6,7 +6,7 @@ const {
     findByIdMajors,
     updateMajors,
     deleteMajors,
-} = require('../controllers/MajorsController');
+} = require('../controllers/organizational_structure/faculty/MajorsController');
 
 const AuthMiddleWare = require('../middleware/AuthMiddleware');
 

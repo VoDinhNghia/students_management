@@ -1,6 +1,6 @@
-const jwtHelper = require('../helper/jwt.Helper');
-const errorList = require('../error/ErrorList');
-const ConfigKeySecret = require('../config/Config').ConfigKeySecret
+const jwtHelper = require('../../helper/jwt.Helper');
+const errorList = require('../../error/ErrorList');
+const ConfigKeySecret = require('../../config/Config').ConfigKeySecret
 
 const accessTokenLife = process.env.ACCESS_TOKEN_LIFE || ConfigKeySecret.accessTokenLife;
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || ConfigKeySecret.accessTokenSecret;

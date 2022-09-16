@@ -1,5 +1,5 @@
-const UserService = require('../../services/UserService');
-const ProfileService = require('../../services/ProfileService');
+const UserService = require('../../services/users/UserService');
+const ProfileService = require('../../services/users/ProfileService');
 const jwtHelper = require('../../helper/jwt.Helper');
 const errorList = require('../../error/ErrorList');
 const { cryptoPass } = require('../../common/Crypto');

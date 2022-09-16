@@ -1,4 +1,4 @@
-const AttachmentModel = require('../models/Attachment');
+const AttachmentModel = require('../../models/general/Attachment');
 
 exports.createAttachment = async(uploadBy, url, fileInfo) => {
     const { originalname, mimetype, path, filename } = fileInfo;

@@ -1,4 +1,4 @@
-const ClassModel = require('../models/ClassInfo');
+const ClassModel = require('../../models/class_subject/ClassInfo');
 
 exports.findById = async(id) => {
     return await ClassModel.findById(id);

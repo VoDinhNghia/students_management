@@ -1,4 +1,4 @@
-const UserService = require('../../services/UserService');
+const UserService = require('../../services/users/UserService');
 const errorList = require('../../error/ErrorList');
 const { roles } = require('../../common/Constant');
 

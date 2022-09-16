@@ -5,7 +5,7 @@ const {
     uploadPdf,
     fetchAllAttachments,
     findById,
-} = require('../controllers/Attachment');
+} = require('../controllers/general/Attachment');
 const { uploadFileImage } = require('../controllers/uploadFile/UploadImage');
 const { uploadFilePdf } = require('../controllers/uploadFile/UploadPDF');
 

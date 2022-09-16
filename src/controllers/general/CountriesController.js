@@ -1,6 +1,6 @@
-const CountryService = require('../services/CountryService');
-const errorList = require('../error/ErrorList');
-const urlConfig = require('../config/Config').url;
+const CountryService = require('../../services/general/CountryService');
+const errorList = require('../../error/ErrorList');
+const urlConfig = require('../../config/Config').url;
 
 exports.fetchAllCountries = async(req, res) => {
     try {

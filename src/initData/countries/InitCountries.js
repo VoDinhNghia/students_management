@@ -1,7 +1,7 @@
 // run node src/initData/countries/InitCountries.js or cd folder and node InitCountries.js to create data for countries collection
 const fs = require('fs');
 require('../../config/Config').connectDB.mongoDB;
-const CountryService = require('../../services/CountryService');
+const CountryService = require('../../services/general/CountryService');
 
 let countriesList = []
 try {

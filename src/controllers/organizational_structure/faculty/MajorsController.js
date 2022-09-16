@@ -1,5 +1,5 @@
-const MajorsService = require('../services/MajorsService');
-const errorList = require('../error/ErrorList');
+const MajorsService = require('../../../services/organizational_structure/faculty/MajorsService');
+const errorList = require('../../../error/ErrorList');
 
 exports.createMajors = async(req, res) => {
     try {
