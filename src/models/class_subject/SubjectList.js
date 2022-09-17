@@ -6,6 +6,15 @@ const subjectSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true
     },
+    facultyId: {
+        type: Schema.Types.ObjectId,
+    },
+    courseId: { // Lecturer in charge
+        type: Schema.Types.ObjectId,
+    },
+    degreeLevelId: { // Formal university, College...
+        type: Schema.Types.ObjectId,
+    },
     name: {
         type: String,
         required: true,
@@ -17,10 +26,11 @@ const subjectSchema = new Schema({
         type: Date,
     },
     schedule: {
-        learnDate: String, // monday,....
+        learnDate: Date, // monday + time
         startDate: Date,
         endDate: Date,
         semester: Schema.Types.ObjectId,
+        process: Schema.Types.ObjectId, // will have collection for schedule subject.
     },
     size: { // total student
         type: Number,
@@ -39,9 +49,6 @@ const subjectSchema = new Schema({
     },
     status: { // open or closed
         type: Boolean,
-    },
-    facultyId: {
-        type: Schema.Types.ObjectId,
     },
     createdAt: {
         type: Date,

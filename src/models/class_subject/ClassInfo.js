@@ -2,19 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ClassSchema = new Schema({
-    name: {
+    name: { // DHKHMT12A 
         type: String
     },
-    courseYear: {
-        type: String
+    courseId: {
+        type: Schema.Types.ObjectId,
     },
-    period: { // study period
-        maximum: {
-            type: Number,
-        },
-        minimum: {
-            type: Number,
-        }
+    degreeLevelId: { // Formal university, College...
+        type: Schema.Types.ObjectId,
     },
     classSize: {
         type: Number

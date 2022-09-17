@@ -12,6 +12,9 @@ const schoolInfoSchema = new Schema({
     numberTotal: { // student + lecture + leader ...
         type: Number,
     },
+    branchList: [
+        { type: Schema.Types.ObjectId }
+    ],
     image: [
         { type: Schema.Types.ObjectId } // attachment Id
     ],

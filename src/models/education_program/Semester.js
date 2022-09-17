@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const semesterSchema = new Schema({
-    name: {
+    name: { // HK I
         type: String,
         required: true,
     },
-    year: {
+    year: { // 2016 - 2017
         type: Date,
     },
     createdAt: {

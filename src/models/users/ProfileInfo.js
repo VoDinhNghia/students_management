@@ -12,6 +12,12 @@ const profileSchema = new Schema({
     facultyId: {
         type: Schema.Types.ObjectId,
     },
+    courseId: { // for student
+        type: Schema.Types.ObjectId,
+    },
+    degreeLevelId: { // Formal university, College...
+        type: Schema.Types.ObjectId,
+    },
     firstName: {
         type: String,
     },
@@ -40,9 +46,9 @@ const profileSchema = new Schema({
         attachmentId: Schema.Types.ObjectId,
     }],
     studyProcess: {
-        listSemester: [
-            { semesterId: Schema.Types.ObjectId }
-        ],
+        listSemester: [{
+            semesterId: Schema.Types.ObjectId
+        }],
         toeicCertificate: {
             status: Boolean,
             attachmentId: Schema.Types.ObjectId,
@@ -54,6 +60,9 @@ const profileSchema = new Schema({
             scores: Number,
         },
         status: String, // Are you still studying or graduating or saving?
+    },
+    dateOfBirth: {
+        type: Date,
     },
     joinDate: {
         type: Date,
