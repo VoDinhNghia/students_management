@@ -9,7 +9,7 @@ const profileSchema = new Schema({
     classId: {
         type: Schema.Types.ObjectId,
     },
-    facultyId: { // role lecture
+    facultyId: {
         type: Schema.Types.ObjectId,
     },
     firstName: {
@@ -55,6 +55,15 @@ const profileSchema = new Schema({
         },
         status: String, // Are you still studying or graduating or saving?
     },
+    joinDate: {
+        type: Date,
+    },
+    endDate: {
+        type: Date
+    },
+    positionHeld: [{ // class president, secretary
+        type: String,
+    }],
     award: [{
         awardId: Schema.Types.ObjectId,
     }],
