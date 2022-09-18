@@ -1,5 +1,5 @@
 const MajorsModel = require('../../../models/organizational_structure/faculty/Majors');
-const { lookup } = require('../../general/Lookup');
+const { lookup } = require('../../Aggregate/Lookup');
 
 exports.findById = async(id) => {
     return await MajorsModel.findById(id);
