@@ -26,7 +26,8 @@ const subjectSchema = new Schema({
         type: Date,
     },
     schedule: {
-        learnDate: Date, // monday + time
+        learnDate: Date, // monday
+        time: String, // 8h - 10h A.M
         startDate: Date,
         endDate: Date,
         semester: Schema.Types.ObjectId,
@@ -35,7 +36,7 @@ const subjectSchema = new Schema({
     size: { // total student
         type: Number,
     },
-    numberOfCredits: {
+    numberOfCredits: { // 3 TC
         type: Number,
     },
     numberOfFailed: {

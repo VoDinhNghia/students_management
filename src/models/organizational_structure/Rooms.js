@@ -5,6 +5,16 @@ const roomSchema = new Schema({
     name: {
         type: String,
     },
+    type: { // practice room, theory room
+        type: String
+    },
+    capacity: {
+        type: Number,
+    },
+    divice: {
+        projector: String,
+        airConditioner: String,
+    },
     description: {
         type: String,
     },
