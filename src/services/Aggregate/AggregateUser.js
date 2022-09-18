@@ -1,25 +1,5 @@
 const { lookup } = require('./Lookup');
 
-exports.aaa = (match) => {
-    const aggregate = [];
-    if (match) {
-        aggregate.push({
-            $match: match
-        });
-    }
-    const lookupAgg = lookup([{
-        from: 'profileinfos',
-        localField: '_id',
-        foreignField: 'userId',
-    }]);
-    const project = [{
-        $project: {
-            passWord: 0,
-        }
-    }];
-    return [...aggregate, ...lookupAgg, ...project];
-}
-
 exports.paginationAgg = (limit, page, aggregate = []) => {
     return [
         ...aggregate,
@@ -28,6 +8,9 @@ exports.paginationAgg = (limit, page, aggregate = []) => {
         },
         {
             $limit: Number(limit),
+        },
+        {
+            $sort: { 'createdAt': -1 },
         }
     ]
 }

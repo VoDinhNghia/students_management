@@ -86,7 +86,21 @@ exports.fetchAllStudents = async(req, res) => {
             statusCode: 200,
             data,
             total,
-            message: 'Get list lecturer success.'
+            message: 'Get list student success.'
+        });
+    } catch (error) {
+        return errorList.error500(res);
+    }
+};
+
+exports.filterStudent = async(req, res) => {
+    try {
+        const { data, total } = await UserService.fetchStudentByCommon(req.query);
+        res.json({
+            statusCode: 200,
+            data,
+            total,
+            message: 'Get list student success.'
         });
     } catch (error) {
         return errorList.error500(res);

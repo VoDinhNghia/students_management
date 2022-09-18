@@ -14,6 +14,9 @@ exports.queryByAggregate = async(limit, page, aggregate = []) => {
             },
             {
                 $limit: Number(limit),
+            },
+            {
+                $sort: { 'createdAt': -1 },
             }
         ]
     }
@@ -90,15 +93,15 @@ exports.fetchStudentByCommon = async(query) => {
     const matchOne = { role: roles.STUDENT };
     let matchTwo;
     if (facultyId) {
-        matchTwo = { 'profileinfos.facultyId': facultyId }
+        matchTwo = { 'profileinfos.facultyId': Types.ObjectId(facultyId) };
     }
     if (classId) {
         if (matchTwo) {
-            matchTwo = {...matchTwo, 'profileinfos.classId': facultyId }
+            matchTwo = {...matchTwo, 'profileinfos.classId': Types.ObjectId(classId) };
         }
-        matchTwo = { 'profileinfos.classId': facultyId }
+        matchTwo = { 'profileinfos.classId': Types.ObjectId(classId) };
     }
-    const aggregate = this.aggregateCommon(matchOne, matchTwo);
+    const aggregate = aggregateCommon(matchOne, matchTwo);
     const { result, countDocument } = await this.queryByAggregate(limit, page, aggregate);
     const total = countDocument && countDocument.length > 0 ? countDocument[0].count : 0;
     return {

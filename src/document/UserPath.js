@@ -331,3 +331,65 @@ exports.deleteUser = {
         }
     }
 }
+
+exports.studentList = {
+    '/user/filter-student': {
+        'get': {
+            'tags': [
+                'User'
+            ],
+            'description': 'Get list student.',
+            'parameters': [{
+                'name': 'limit',
+                'in': 'query',
+                'example': {
+                    'limit': 10
+                },
+                'required': true
+            }, {
+                'name': 'page',
+                'in': 'query',
+                'example': {
+                    'page': 1
+                },
+                'required': true
+            }, {
+                'name': 'facultyId',
+                'in': 'query',
+                'example': {
+                    'facultyId': 'string'
+                },
+                'required': false
+            }, {
+                'name': 'classId',
+                'in': 'query',
+                'example': {
+                    'classId': 'string'
+                },
+                'required': false
+            }, {
+                'name': 'Authorization',
+                'in': 'header',
+                'description': 'Authorization bearer token',
+                'required': true
+            }],
+            'security': [{
+                'type': 'http',
+                'scheme': 'bearer',
+                'bearerFormat': 'JWT',
+            }],
+            'responses': {
+                '200': {
+                    'description': 'Get list student susscess.',
+                    'content': {
+                        'application/json': {
+                            'schema': {
+                                'type': 'array'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+}

@@ -6,6 +6,7 @@ const {
     deleteUser,
     fetchAllLecturers,
     fetchAllStudents,
+    filterStudent,
 } = require('../controllers/users/GetAndDeleteController');
 const { createUser, updateUser, login } = require('../controllers/users/PostAndPutController');
 
@@ -20,5 +21,6 @@ router.route('/delete/:id').delete(deleteUser);
 router.route('/update').post(updateUser);
 router.route('/list-lecturer').get(fetchAllLecturers);
 router.route('/list-student').get(fetchAllStudents);
+router.route('/filter-student').get(filterStudent);
 
 module.exports = router;
