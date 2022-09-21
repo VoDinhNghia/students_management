@@ -1,7 +1,7 @@
 const { Types } = require('mongoose');
 const UserModel = require('../../models/users/User');
 const { statusUser } = require('../../common/Constant');
-const { aggregateCommon } = require('../Aggregate/AggregateUser');
+const { aggregateCommon } = require('../commonService/UserAggregate');
 const { roles } = require('../../common/Constant');
 
 exports.queryByAggregate = async(limit, page, aggregate = []) => {

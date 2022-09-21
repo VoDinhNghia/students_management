@@ -1,5 +1,5 @@
 const FacultyModel = require('../../../models/organizational_structure/faculty/Faculty');
-const { lookup } = require('../../Aggregate/Lookup');
+const { aggregateFacultyCommon } = require('../../commonService/OrgStructureAggregate');
 
 exports.findById = async(id) => {
     return await FacultyModel.findById(id);
@@ -12,11 +12,7 @@ exports.findByname = async(name) => {
 };
 
 exports.fetchAllFaculty = async() => {
-    const aggregate = lookup([{
-        from: 'majors',
-        localField: '_id',
-        foreignField: 'facultyId',
-    }])
+    const aggregate = aggregateFacultyCommon();
     return await FacultyModel.aggregate(aggregate);
 };
 

@@ -1,22 +1,7 @@
 const { lookup } = require('./Lookup');
 
-exports.paginationAgg = (limit, page, aggregate = []) => {
-    return [
-        ...aggregate,
-        {
-            $skip: Number(limit) * (Number(page) - 1),
-        },
-        {
-            $limit: Number(limit),
-        },
-        {
-            $sort: { 'createdAt': -1 },
-        }
-    ]
-}
-
 exports.aggregateCommon = (matchOne, matchTwo) => {
-    const aggregate = [];
+    let aggregate = [];
     if (matchOne) {
         aggregate.push({
             $match: matchOne
@@ -32,12 +17,13 @@ exports.aggregateCommon = (matchOne, matchTwo) => {
             passWord: 0,
         }
     }];
+    aggregate = [...aggregate, ...lookupAgg, ...project];
     if (matchTwo) {
-        return [...aggregate, ...lookupAgg, ...project,
+        aggregate = [...aggregate,
             {
                 $match: matchTwo
             }
         ];
     }
-    return [...aggregate, ...lookupAgg, ...project];
+    return aggregate;
 }

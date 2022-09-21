@@ -61,4 +61,4 @@ const subjectSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('subjectLists', subjectSchema);
+module.exports = mongoose.model('subjectlists', subjectSchema);
