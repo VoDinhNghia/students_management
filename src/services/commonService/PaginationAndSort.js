@@ -1,4 +1,4 @@
-exports.paginationAgg = (limit, page, aggregate = []) => {
+exports.paginationAndSortByCreatedAt = (limit, page, aggregate = []) => {
     return [
         ...aggregate,
         {
@@ -7,12 +7,6 @@ exports.paginationAgg = (limit, page, aggregate = []) => {
         {
             $limit: Number(limit),
         },
-    ]
-}
-
-exports.sortByColunmAgg = (aggregate = []) => {
-    return [
-        ...aggregate,
         {
             $sort: { 'createdAt': -1 },
         },

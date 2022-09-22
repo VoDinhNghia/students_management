@@ -52,11 +52,34 @@ exports.majorsList = {
             ],
             'description': 'Get Majors',
             'parameters': [{
-                "name": "Authorization",
-                "in": "header",
-                "description": "Authorization bearer token",
-                "required": true
-            }],
+                    'name': 'userId',
+                    'in': 'query',
+                    'example': {
+                        'userId': '6319e8bac609ca008f6b041a'
+                    },
+                    'required': true
+                }, {
+                    'name': 'limit',
+                    'in': 'query',
+                    'example': {
+                        'limit': 10
+                    },
+                    'required': true
+                }, {
+                    'name': 'page',
+                    'in': 'query',
+                    'example': {
+                        'page': 1
+                    },
+                    'required': true
+                },
+                {
+                    "name": "Authorization",
+                    "in": "header",
+                    "description": "Authorization bearer token",
+                    "required": true
+                }
+            ],
             "security": [{
                 "type": "http",
                 "scheme": "bearer",
@@ -79,41 +102,129 @@ exports.majorsList = {
 }
 
 exports.updateMajors = {
-    "/majors/update": {
-        "put": {
-            "tags": [
-                "Majors"
+    '/majors/update': {
+        'post': {
+            'tags': [
+                'Majors'
             ],
-            "description": "Update info majors",
-            "parameters": [{
-                    "name": "body",
-                    "in": "body",
-                    "description": "key search",
-                    "example": {
-                        "id": "6315af29c8d78031aca812d8",
-                        "name": "string"
+            'description': 'Update info majors',
+            'parameters': [{
+                    'name': 'body',
+                    'in': 'body',
+                    'description': 'key search',
+                    'example': {
+                        'id': '6315af29c8d78031aca812d8',
+                        'name': 'string'
                     },
-                    "required": true
+                    'required': true
                 },
                 {
-                    "name": "Authorization",
-                    "in": "header",
-                    "description": "Authorization bearer token",
-                    "required": true
+                    'name': 'Authorization',
+                    'in': 'header',
+                    'description': 'Authorization bearer token',
+                    'required': true
                 }
             ],
-            "security": [{
-                "type": "http",
-                "scheme": "bearer",
-                "bearerFormat": "JWT",
+            'security': [{
+                'type': 'http',
+                'scheme': 'bearer',
+                'bearerFormat': 'JWT',
             }],
-            "responses": {
-                "200": {
-                    "description": "Update susscess.",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array"
+            'responses': {
+                '200': {
+                    'description': 'Update susscess.',
+                    'content': {
+                        'application/json': {
+                            'schema': {
+                                'type': 'array'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+exports.findMajorsById = {
+    '/majors/get-by-id/{id}': {
+        'get': {
+            'tags': [
+                'Majors'
+            ],
+            'description': 'Get majors by id',
+            'parameters': [{
+                    'name': 'id',
+                    'in': 'path',
+                    'description': 'id majors',
+                    'example': {
+                        'id': 'string'
+                    },
+                    'required': true
+                },
+                {
+                    'name': 'Authorization',
+                    'in': 'header',
+                    'description': 'Authorization bearer token',
+                    'required': true
+                }
+            ],
+            'security': [{
+                'type': 'http',
+                'scheme': 'bearer',
+                'bearerFormat': 'JWT',
+            }],
+            'responses': {
+                '200': {
+                    'description': 'Get majors success.',
+                    'content': {
+                        'application/json': {
+                            'schema': {
+                                'type': 'array'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+exports.deleteMajors = {
+    '/majors/delete/{id}': {
+        'delete': {
+            'tags': [
+                'Majors'
+            ],
+            'description': 'Delete majors.',
+            'parameters': [{
+                    'name': 'id',
+                    'in': 'path',
+                    'description': 'id majors',
+                    'example': {
+                        'id': 'string'
+                    },
+                    'required': true
+                },
+                {
+                    'name': 'Authorization',
+                    'in': 'header',
+                    'description': 'Authorization bearer token',
+                    'required': true
+                }
+            ],
+            'security': [{
+                'type': 'http',
+                'scheme': 'bearer',
+                'bearerFormat': 'JWT',
+            }],
+            'responses': {
+                '200': {
+                    'description': 'Delete majors success.',
+                    'content': {
+                        'application/json': {
+                            'schema': {
+                                'type': 'array'
                             }
                         }
                     }

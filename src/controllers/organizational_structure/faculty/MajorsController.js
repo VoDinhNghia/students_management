@@ -1,5 +1,7 @@
 const MajorsService = require('../../../services/organizational_structure/faculty/MajorsService');
 const FaculTyService = require('../../../services/organizational_structure/faculty/FacultyService');
+const UserService = require('../../../services/users/UserService');
+const { roles } = require('../../../common/Constant');
 const errorList = require('../../../error/ErrorList');
 
 exports.createMajors = async(req, res) => {
@@ -29,10 +31,19 @@ exports.createMajors = async(req, res) => {
 
 exports.fetchAllMajors = async(req, res) => {
     try {
-        const result = await MajorsService.fetchAllMajors();
+        const { userId } = req.query;
+        const findUser = await UserService.findUserById(userId);
+        if (!findUser) {
+            return errorList.commonError400(res, 'User not found.');
+        }
+        if (findUser.role !== roles.ADMIN) {
+            return errorList.commonError(res, 'You are not permission get all user.', 403);
+        }
+        const { result, total } = await MajorsService.fetchAllMajors(req.query);
         res.json({
             statusCode: 200,
             data: result,
+            total,
             message: 'Get list majors success.'
         });
     } catch (error) {
@@ -53,6 +64,7 @@ exports.findByIdMajors = async(req, res) => {
             message: 'Get Majors success.'
         });
     } catch (error) {
+        console.log(error)
         return errorList.error500(res);
     }
 }

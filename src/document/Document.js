@@ -11,8 +11,20 @@ const {
 } = require('./UserPath');
 const { codeStatus } = require('./CodeStatusPath');
 const { countryList } = require('./CountryPath');
-const { createFaculty, facultyList } = require('./FacultyPath');
-const { createMajors, majorsList, updateMajors } = require('./MajorsPath');
+const {
+    createFaculty,
+    facultyList,
+    updateFaculty,
+    findFacultyById,
+    deleteFaculty
+} = require('./FacultyPath');
+const {
+    createMajors,
+    majorsList,
+    updateMajors,
+    findMajorsById,
+    deleteMajors
+} = require('./MajorsPath');
 const {
     attachmentList,
     uploadAttachmentImage,
@@ -53,8 +65,13 @@ exports.swagger_options = {
             ...deleteUser,
             ...countryList,
             ...createFaculty,
+            ...updateFaculty,
+            ...findFacultyById,
+            ...deleteFaculty,
             ...facultyList,
             ...createMajors,
+            ...findMajorsById,
+            ...deleteMajors,
             ...majorsList,
             ...updateMajors,
             ...attachmentList,

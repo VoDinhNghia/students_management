@@ -10,6 +10,9 @@ const majorSchema = new Schema({
         type: String,
         required: true,
     },
+    introduction: {
+        type: String,
+    },
     foundYear: {
         type: Date,
     },

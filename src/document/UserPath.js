@@ -289,7 +289,7 @@ exports.findUserById = {
 }
 
 exports.deleteUser = {
-    '/delete/{id}': {
+    '/user/delete/{id}': {
         'delete': {
             'tags': [
                 'User'

@@ -1,8 +1,12 @@
+const { Types } = require('mongoose');
 const MajorsModel = require('../../../models/organizational_structure/faculty/Majors');
-const { lookup } = require('../../commonService/Lookup');
+const { aggregateMajorsCommon } = require('../../commonService/OrgStructureAggregate');
+const { paginationAndSortByCreatedAt } = require('../../commonService/PaginationAndSort');
 
 exports.findById = async(id) => {
-    return await MajorsModel.findById(id);
+    const aggregate = aggregateMajorsCommon({ _id: Types.ObjectId(id) });
+    const result = await MajorsModel.aggregate(aggregate);
+    return result && result.length > 0 ? result[0] : null;
 };
 
 exports.findByname = async(name) => {
@@ -11,13 +15,17 @@ exports.findByname = async(name) => {
     });
 };
 
-exports.fetchAllMajors = async() => {
-    const aggregate = lookup([{
-        from: 'facultys',
-        localField: 'facultyId',
-        foreignField: '_id',
-    }])
-    return await MajorsModel.aggregate(aggregate);
+exports.fetchAllMajors = async(query) => {
+    const { limit, page } = query;
+    const aggregateCommon = aggregateMajorsCommon();
+    const aggregate = paginationAndSortByCreatedAt(limit, page, aggregateCommon);
+    const aggregateTotal = [...aggregateCommon, { $group: { _id: null, count: { $sum: 1 } } }];
+    const result = await MajorsModel.aggregate(aggregate);
+    const total = await MajorsModel.aggregate(aggregateTotal);
+    return {
+        result,
+        total: total && total.length > 0 ? total[0].count : 0,
+    }
 };
 
 exports.createMajors = async(majors) => {

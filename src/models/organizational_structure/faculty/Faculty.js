@@ -9,6 +9,9 @@ const facultySchema = new Schema({
     foundYear: {
         type: Date,
     },
+    introduction: {
+        type: String,
+    },
     award: [{
         awardId: Schema.Types.ObjectId,
     }],
