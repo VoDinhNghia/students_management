@@ -7,7 +7,11 @@ const errorList = require('../../../error/ErrorList');
 
 exports.createMajors = async(req, res) => {
     try {
-        const { name, facultyId } = req.body;
+        const { name, facultyId, userId } = req.body;
+        const findUser = await UserService.findUserById(userId);
+        if (!checkRoleAccess([roles.ADMIN], findUser ? findUser.role : '')) {
+            return errorList.commonError(res, 'You are not permission create majors.', 403);
+        }
         const existedMajors = await MajorsService.findByname(name);
         if (existedMajors) {
             return errorList.commonError400(res, 'Majors existed already.');
@@ -34,10 +38,7 @@ exports.fetchAllMajors = async(req, res) => {
     try {
         const { userId } = req.query;
         const findUser = await UserService.findUserById(userId);
-        if (!findUser) {
-            return errorList.commonError400(res, 'User not found.');
-        }
-        if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.STUDENT])) {
+        if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.STUDENT], findUser ? findUser.role : '')) {
             return errorList.commonError(res, 'You are not permission get all user.', 403);
         }
         const { result, total } = await MajorsService.fetchAllMajors(req.query);
@@ -48,14 +49,17 @@ exports.fetchAllMajors = async(req, res) => {
             message: 'Get list majors success.'
         });
     } catch (error) {
-        console.log(error)
         return errorList.error500(res);
     }
 }
 
 exports.findByIdMajors = async(req, res) => {
     try {
-        const { id } = req.params;
+        const { id, userId } = req.params;
+        const findUser = await UserService.findUserById(userId);
+        if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.STUDENT], findUser ? findUser.role : '')) {
+            return errorList.commonError(res, 'You are not permission get all majors.', 403);
+        }
         const result = await MajorsService.findById(id);
         if (!result) {
             return errorList.commonError400(res, 'Majors not found.');
@@ -73,7 +77,11 @@ exports.findByIdMajors = async(req, res) => {
 
 exports.updateMajors = async(req, res) => {
     try {
-        const { id } = req.body;
+        const { id, userId } = req.body;
+        const findUser = await UserService.findUserById(userId);
+        if (!checkRoleAccess([roles.ADMIN], findUser ? findUser.role : '')) {
+            return errorList.commonError(res, 'You are not permission update majors.', 403);
+        }
         const existedMajors = await MajorsService.findById(id);
         if (!existedMajors) {
             return errorList.commonError400(res, 'Majors not found.');
@@ -91,7 +99,11 @@ exports.updateMajors = async(req, res) => {
 
 exports.deleteMajors = async(req, res) => {
     try {
-        const { id } = req.params;
+        const { id, userId } = req.params;
+        const findUser = await UserService.findUserById(userId);
+        if (!checkRoleAccess([roles.ADMIN], findUser ? findUser.role : '')) {
+            return errorList.commonError(res, 'You are not permission delete majors.', 403);
+        }
         const existedMajors = await MajorsService.findById(id);
         if (!existedMajors) {
             return errorList.commonError400(res, 'Majors not found.');
@@ -114,11 +126,8 @@ exports.fetchByFaculty = async(req, res) => {
             return errorList.commonError400(res, 'facultyIds must provided.')
         }
         const findUser = await UserService.findUserById(userId);
-        if (!findUser) {
-            return errorList.commonError400(res, 'User not found.');
-        }
-        if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.STUDENT])) {
-            return errorList.commonError(res, 'You are not permission get all user.', 403);
+        if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.STUDENT], findUser ? findUser.role : '')) {
+            return errorList.commonError(res, 'You are not permission get majors by faculty.', 403);
         }
         const { result, total } = await MajorsService.fetchByFacultys(req.query);
         res.json({

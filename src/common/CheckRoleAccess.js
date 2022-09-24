@@ -1,9 +1,7 @@
-const { rolesList } = require('../common/Constant');
-
-exports.checkRoleAccess = (roles = []) => {
+exports.checkRoleAccess = (roles = [], roleUser) => {
     let checkRole = false;
-    for (const index in roles) {
-        if (rolesList.includes(roles[index])) {
+    for (let i = 0; i < roles.length; i++) {
+        if (roles[i] === roleUser) {
             checkRole = true;
             break;
         }
