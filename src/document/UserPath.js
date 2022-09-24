@@ -9,7 +9,7 @@ exports.userList = {
                 'name': 'userId',
                 'in': 'query',
                 'example': {
-                    'userId': '63189a1662ed22b553acd703'
+                    'userId': '6319e8bac609ca008f6b041a'
                 },
                 'required': true
             }, {
@@ -61,6 +61,13 @@ exports.lecturerList = {
             ],
             'description': 'Get list lecturer.',
             'parameters': [{
+                'name': 'userId',
+                'in': 'query',
+                'example': {
+                    'userId': '6319e8bac609ca008f6b041a'
+                },
+                'required': true
+            }, {
                 'name': 'limit',
                 'in': 'query',
                 'example': {
@@ -109,6 +116,13 @@ exports.studentList = {
             ],
             'description': 'Get list student.',
             'parameters': [{
+                'name': 'userId',
+                'in': 'query',
+                'example': {
+                    'userId': '6319e8bac609ca008f6b041a'
+                },
+                'required': true
+            }, {
                 'name': 'limit',
                 'in': 'query',
                 'example': {
@@ -212,7 +226,8 @@ exports.updateUser = {
                     'description': 'key search',
                     'example': {
                         'id': '6315af29c8d78031aca812d8',
-                        'name': 'string'
+                        'name': 'string',
+                        'userId': '6319e8bac609ca008f6b041a'
                     },
                     'required': true
                 },
@@ -245,15 +260,22 @@ exports.updateUser = {
 }
 
 exports.findUserById = {
-    '/user/get-by-id/{id}': {
+    '/user/get-by-id': {
         'get': {
             'tags': [
                 'User'
             ],
             'description': 'Get user by id',
             'parameters': [{
+                    'name': 'userId',
+                    'in': 'query',
+                    'example': {
+                        'userId': '6319e8bac609ca008f6b041a'
+                    },
+                    'required': true
+                }, {
                     'name': 'id',
-                    'in': 'path',
+                    'in': 'query',
                     'description': 'id user',
                     'example': {
                         'id': 'string'
@@ -289,15 +311,22 @@ exports.findUserById = {
 }
 
 exports.deleteUser = {
-    '/user/delete/{id}': {
+    '/user/delete': {
         'delete': {
             'tags': [
                 'User'
             ],
             'description': 'Delete user.',
             'parameters': [{
+                    'name': 'userId',
+                    'in': 'query',
+                    'example': {
+                        'userId': '6319e8bac609ca008f6b041a'
+                    },
+                    'required': true
+                }, {
                     'name': 'id',
-                    'in': 'path',
+                    'in': 'query',
                     'description': 'id user',
                     'example': {
                         'id': 'string'
@@ -340,6 +369,13 @@ exports.studentList = {
             ],
             'description': 'Get list student.',
             'parameters': [{
+                'name': 'userId',
+                'in': 'query',
+                'example': {
+                    'userId': '6319e8bac609ca008f6b041a'
+                },
+                'required': true
+            }, {
                 'name': 'limit',
                 'in': 'query',
                 'example': {

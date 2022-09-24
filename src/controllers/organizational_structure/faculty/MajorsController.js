@@ -55,7 +55,7 @@ exports.fetchAllMajors = async(req, res) => {
 
 exports.findByIdMajors = async(req, res) => {
     try {
-        const { id, userId } = req.params;
+        const { id, userId } = req.query;
         const findUser = await UserService.findUserById(userId);
         if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.STUDENT], findUser ? findUser.role : '')) {
             return errorList.commonError(res, 'You are not permission get all majors.', 403);
@@ -99,7 +99,7 @@ exports.updateMajors = async(req, res) => {
 
 exports.deleteMajors = async(req, res) => {
     try {
-        const { id, userId } = req.params;
+        const { id, userId } = req.query;
         const findUser = await UserService.findUserById(userId);
         if (!checkRoleAccess([roles.ADMIN], findUser ? findUser.role : '')) {
             return errorList.commonError(res, 'You are not permission delete majors.', 403);

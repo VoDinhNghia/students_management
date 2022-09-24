@@ -6,6 +6,7 @@ const { cryptoPass } = require('../../common/Crypto');
 const ConfigKeySecret = require('../../config/Config').ConfigKeySecret;
 const { roles } = require('../../common/Constant');
 const { validateEmail } = require('../../common/validateEmail');
+const { checkRoleAccess } = require('../../common/CheckRoleAccess');
 
 const accessTokenLife = process.env.ACCESS_TOKEN_LIFE || ConfigKeySecret.accessTokenLife;
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || ConfigKeySecret.accessTokenSecret;
@@ -51,36 +52,31 @@ exports.login = async(req, res) => {
 exports.createUser = async(req, res) => {
     try {
         const { email, passWord, createBy } = req.body;
-        const createByInfo = await UserService.findUserById(createBy);
-        if (!createByInfo) {
-            return errorList.commonError400(res, 'CreateBy not found.');
-        }
-        if (createByInfo.role === roles.ADMIN) {
-            const findUser = await UserService.findUserByEmail(email);
-            if (findUser) {
-                return errorList.commonError400(res, 'Email existed already.');
-            }
-            if (email && !validateEmail(email)) {
-                return errorList.commonError400(res, 'email not correct format.');
-            }
-            req.body.passWord = cryptoPass(passWord);
-            const user = await UserService.createUser(req.body);
-            if (user) {
-                await ProfileService.createProfile({
-                    ...req.body,
-                    userId: user._id,
-                })
-                res.json({
-                    statusCode: 200,
-                    data: user,
-                    message: 'Create user success.'
-                });
-            } else {
-                return errorList.commonError400(res, 'Create user failed.');
-            }
-        } else {
+        const getUserAccess = await UserService.findUserById(createBy);
+        if (!checkRoleAccess([roles.ADMIN], getUserAccess ? getUserAccess.role : '')) {
             return errorList.commonError(res, 'You are have permission to create user.', 403);
         }
+        const findUser = await UserService.findUserByEmail(email);
+        if (findUser) {
+            return errorList.commonError400(res, 'Email existed already.');
+        }
+        if (email && !validateEmail(email)) {
+            return errorList.commonError400(res, 'email not correct format.');
+        }
+        req.body.passWord = cryptoPass(passWord);
+        const user = await UserService.createUser(req.body);
+        if (!user) {
+            return errorList.commonError400(res, 'Create user failed.');
+        }
+        await ProfileService.createProfile({
+            ...req.body,
+            userId: user._id,
+        });
+        res.json({
+            statusCode: 200,
+            data: user,
+            message: 'Create user success.'
+        });
     } catch (error) {
         return errorList.error500(res);
     }
@@ -88,9 +84,10 @@ exports.createUser = async(req, res) => {
 
 exports.updateUser = async(req, res) => {
     try {
-        const { id } = req.body;
-        if (!id) {
-            return errorList.commonError400(res, 'id must provided.');
+        const { id, userId } = req.body;
+        const getUserAccess = await UserService.findUserById(userId);
+        if (!checkRoleAccess([roles.ADMIN], getUserAccess ? getUserAccess.role : '')) {
+            return errorList.commonError(res, 'You are have permission to update user.', 403);
         }
         const findUser = await UserService.findUserById(id);
         if (!findUser) {

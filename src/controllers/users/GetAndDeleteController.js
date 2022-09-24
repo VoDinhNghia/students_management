@@ -1,12 +1,14 @@
 const UserService = require('../../services/users/UserService');
 const errorList = require('../../error/ErrorList');
 const { roles } = require('../../common/Constant');
+const { checkRoleAccess } = require('../../common/CheckRoleAccess');
 
 exports.deleteUser = async(req, res) => {
     try {
-        const { id } = req.params;
-        if (!id) {
-            return errorList.commonError400(res, 'id must provided.');
+        const { id, userId } = req.query;
+        const getUserAccess = await UserService.findUserById(userId);
+        if (!checkRoleAccess([roles.ADMIN], getUserAccess ? getUserAccess.role : '')) {
+            return errorList.commonError(res, 'You are not permission delete user.', 403);
         }
         const findUser = await UserService.findUserById(id);
         if (!findUser) {
@@ -25,11 +27,8 @@ exports.deleteUser = async(req, res) => {
 exports.fetchAllUsers = async(req, res) => {
     try {
         const { userId } = req.query;
-        const findUser = await UserService.findUserById(userId);
-        if (!findUser) {
-            return errorList.commonError400(res, 'User not found.');
-        }
-        if (findUser.role !== roles.ADMIN) {
+        const getUserAccess = await UserService.findUserById(userId);
+        if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.STUDENT], getUserAccess ? getUserAccess.role : '')) {
             return errorList.commonError(res, 'You are not permission get all user.', 403);
         }
         const { data, total } = await UserService.fetchAllUsers(req.query);
@@ -47,9 +46,10 @@ exports.fetchAllUsers = async(req, res) => {
 
 exports.findUserById = async(req, res) => {
     try {
-        const { id } = req.params;
-        if (!id) {
-            return errorList.commonError400(res, 'id must provided.');
+        const { id, userId } = req.query;
+        const getUserAccess = await UserService.findUserById(userId);
+        if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.STUDENT], getUserAccess ? getUserAccess.role : '')) {
+            return errorList.commonError(res, 'You are not permission find user.', 403);
         }
         const userInfo = await UserService.findUserById(id);
         if (!userInfo) {
@@ -67,6 +67,11 @@ exports.findUserById = async(req, res) => {
 
 exports.fetchAllLecturers = async(req, res) => {
     try {
+        const { userId } = req.query;
+        const getUserAccess = await UserService.findUserById(userId);
+        if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.STUDENT], getUserAccess ? getUserAccess.role : '')) {
+            return errorList.commonError(res, 'You are not permission fetch list lecture.', 403);
+        }
         const { data, total } = await UserService.fetchByRole(req.query, roles.LECTURER);
         res.json({
             statusCode: 200,
@@ -81,6 +86,11 @@ exports.fetchAllLecturers = async(req, res) => {
 
 exports.fetchAllStudents = async(req, res) => {
     try {
+        const { userId } = req.query;
+        const getUserAccess = await UserService.findUserById(userId);
+        if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.STUDENT], getUserAccess ? getUserAccess.role : '')) {
+            return errorList.commonError(res, 'You are not permission fetch list student.', 403);
+        }
         const { data, total } = await UserService.fetchByRole(req.query, roles.STUDENT);
         res.json({
             statusCode: 200,
@@ -95,6 +105,11 @@ exports.fetchAllStudents = async(req, res) => {
 
 exports.filterStudent = async(req, res) => {
     try {
+        const { userId } = req.query;
+        const getUserAccess = await UserService.findUserById(userId);
+        if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.STUDENT], getUserAccess ? getUserAccess.role : '')) {
+            return errorList.commonError(res, 'You are not permission filter student.', 403);
+        }
         const { data, total } = await UserService.fetchStudentByCommon(req.query);
         res.json({
             statusCode: 200,

@@ -1,11 +1,16 @@
 const FacultyService = require('../../../services/organizational_structure/faculty/FacultyService');
 const UserService = require('../../../services/users/UserService');
 const { roles } = require('../../../common/Constant');
+const { checkRoleAccess } = require('../../../common/CheckRoleAccess');
 const errorList = require('../../../error/ErrorList');
 
 exports.createFaculty = async(req, res) => {
     try {
-        const { name } = req.body;
+        const { name, userId } = req.body;
+        const findUser = await UserService.findUserById(userId);
+        if (!checkRoleAccess([roles.ADMIN], findUser ? findUser.role : '')) {
+            return errorList.commonError(res, 'You are not permission create faculty.', 403);
+        }
         const existedFaculty = await FacultyService.findByname(name);
         if (existedFaculty) {
             return errorList.commonError400(res, 'Faculty existed already.');
@@ -25,11 +30,8 @@ exports.fetchAllFaculty = async(req, res) => {
     try {
         const { userId } = req.query;
         const findUser = await UserService.findUserById(userId);
-        if (!findUser) {
-            return errorList.commonError400(res, 'User not found.');
-        }
-        if (findUser.role !== roles.ADMIN) {
-            return errorList.commonError(res, 'You are not permission get all user.', 403);
+        if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.STUDENT], findUser ? findUser.role : '')) {
+            return errorList.commonError(res, 'You are not permission get all faculty.', 403);
         }
         const { result, total } = await FacultyService.fetchAllFaculty(req.query);
         res.json({
@@ -45,7 +47,11 @@ exports.fetchAllFaculty = async(req, res) => {
 
 exports.findByIdFaculty = async(req, res) => {
     try {
-        const { id } = req.params;
+        const { id, userId } = req.query;
+        const findUser = await UserService.findUserById(userId);
+        if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.LIBRARIAN, roles.STUDENT], findUser ? findUser.role : '')) {
+            return errorList.commonError(res, 'You are not permission find faculty.', 403);
+        }
         const result = await FacultyService.findById(id);
         if (!result) {
             return errorList.commonError400(res, 'Faculty not found.');
@@ -62,7 +68,11 @@ exports.findByIdFaculty = async(req, res) => {
 
 exports.updateFaculty = async(req, res) => {
     try {
-        const { id } = req.body;
+        const { id, userId } = req.body;
+        const findUser = await UserService.findUserById(userId);
+        if (!checkRoleAccess([roles.ADMIN], findUser ? findUser.role : '')) {
+            return errorList.commonError(res, 'You are not permission update faculty.', 403);
+        }
         const existedFaculty = await FacultyService.findById(id);
         if (!existedFaculty) {
             return errorList.commonError400(res, 'Faculty not found.');
@@ -83,7 +93,11 @@ exports.updateFaculty = async(req, res) => {
 
 exports.deleteFaculty = async(req, res) => {
     try {
-        const { id } = req.params;
+        const { id, userId } = req.query;
+        const findUser = await UserService.findUserById(userId);
+        if (!checkRoleAccess([roles.ADMIN], findUser ? findUser.role : '')) {
+            return errorList.commonError(res, 'You are not permission delete faculty.', 403);
+        }
         const existedFaculty = await FacultyService.findById(id);
         if (!existedFaculty) {
             return errorList.commonError400(res, 'Faculty not found.');

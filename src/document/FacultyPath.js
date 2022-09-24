@@ -13,7 +13,8 @@ exports.createFaculty = {
                     'name': 'string',
                     'foundYear': '2022-05-29',
                     'award': [],
-                    'lecturerList': []
+                    'lecturerList': [],
+                    'userId': '6319e8bac609ca008f6b041a'
                 },
                 'required': true
             }, {
@@ -113,7 +114,8 @@ exports.updateFaculty = {
                     'description': 'key search',
                     'example': {
                         'id': '6315af29c8d78031aca812d8',
-                        'name': 'string'
+                        'name': 'string',
+                        'userId': '6319e8bac609ca008f6b041a'
                     },
                     'required': true
                 },
@@ -146,15 +148,22 @@ exports.updateFaculty = {
 }
 
 exports.findFacultyById = {
-    '/faculty/get-by-id/{id}': {
+    '/faculty/get-by-id': {
         'get': {
             'tags': [
                 'Faculty'
             ],
             'description': 'Get faculty by id',
             'parameters': [{
+                    'name': 'userId',
+                    'in': 'query',
+                    'description': 'user Id: 6319e8bac609ca008f6b041a',
+                    'example': {
+                        'userId': '6319e8bac609ca008f6b041a'
+                    }
+                }, {
                     'name': 'id',
-                    'in': 'path',
+                    'in': 'query',
                     'description': 'id faculty',
                     'example': {
                         'id': 'string'
@@ -190,15 +199,23 @@ exports.findFacultyById = {
 }
 
 exports.deleteFaculty = {
-    '/faculty/delete/{id}': {
+    '/faculty/delete': {
         'delete': {
             'tags': [
                 'Faculty'
             ],
             'description': 'Delete faculty.',
             'parameters': [{
+                    'name': 'userId',
+                    'in': 'query',
+                    'description': 'id user: 6319e8bac609ca008f6b041a',
+                    'example': {
+                        'userId': '6319e8bac609ca008f6b041a'
+                    },
+                    'required': true
+                }, {
                     'name': 'id',
-                    'in': 'path',
+                    'in': 'query',
                     'description': 'id faculty',
                     'example': {
                         'id': 'string'

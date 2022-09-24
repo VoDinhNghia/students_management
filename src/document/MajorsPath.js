@@ -14,7 +14,8 @@ exports.createMajors = {
                     'foundYear': '2022-05-29',
                     'award': [],
                     'facultyId': '6315a72d6639fa774b550328',
-                    'lecturerList': []
+                    'lecturerList': [],
+                    'userId': '6319e8bac609ca008f6b041a',
                 },
                 'required': true
             }, {
@@ -180,7 +181,8 @@ exports.updateMajors = {
                     'description': 'key search',
                     'example': {
                         'id': '6315af29c8d78031aca812d8',
-                        'name': 'string'
+                        'name': 'string',
+                        'userId': '6319e8bac609ca008f6b041a'
                     },
                     'required': true
                 },
@@ -213,15 +215,22 @@ exports.updateMajors = {
 }
 
 exports.findMajorsById = {
-    '/majors/get-by-id/{id}': {
+    '/majors/get-by-id': {
         'get': {
             'tags': [
                 'Majors'
             ],
             'description': 'Get majors by id',
             'parameters': [{
+                    'name': 'userId',
+                    'in': 'query',
+                    'example': {
+                        'userId': '6319e8bac609ca008f6b041a'
+                    },
+                    'required': true
+                }, {
                     'name': 'id',
-                    'in': 'path',
+                    'in': 'query',
                     'description': 'id majors',
                     'example': {
                         'id': 'string'
@@ -257,15 +266,22 @@ exports.findMajorsById = {
 }
 
 exports.deleteMajors = {
-    '/majors/delete/{id}': {
+    '/majors/delete': {
         'delete': {
             'tags': [
                 'Majors'
             ],
             'description': 'Delete majors.',
             'parameters': [{
+                    'name': 'userId',
+                    'in': 'query',
+                    'example': {
+                        'userId': '6319e8bac609ca008f6b041a'
+                    },
+                    'required': true
+                }, {
                     'name': 'id',
-                    'in': 'path',
+                    'in': 'query',
                     'description': 'id majors',
                     'example': {
                         'id': 'string'
