@@ -2,6 +2,7 @@ const MajorsService = require('../../../services/organizational_structure/facult
 const FaculTyService = require('../../../services/organizational_structure/faculty/FacultyService');
 const UserService = require('../../../services/users/UserService');
 const { roles } = require('../../../common/Constant');
+const { checkRoleAccess } = require('../../../common/CheckRoleAccess');
 const errorList = require('../../../error/ErrorList');
 
 exports.createMajors = async(req, res) => {
@@ -36,7 +37,7 @@ exports.fetchAllMajors = async(req, res) => {
         if (!findUser) {
             return errorList.commonError400(res, 'User not found.');
         }
-        if (findUser.role !== roles.ADMIN) {
+        if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.STUDENT])) {
             return errorList.commonError(res, 'You are not permission get all user.', 403);
         }
         const { result, total } = await MajorsService.fetchAllMajors(req.query);
@@ -47,6 +48,7 @@ exports.fetchAllMajors = async(req, res) => {
             message: 'Get list majors success.'
         });
     } catch (error) {
+        console.log(error)
         return errorList.error500(res);
     }
 }
@@ -101,6 +103,32 @@ exports.deleteMajors = async(req, res) => {
             message: 'Delete Majors success.'
         });
     } catch (err) {
+        return errorList.error500(res);
+    }
+};
+
+exports.fetchByFaculty = async(req, res) => {
+    try {
+        const { facultyIds, userId } = req.query;
+        if (!facultyIds) {
+            return errorList.commonError400(res, 'facultyIds must provided.')
+        }
+        const findUser = await UserService.findUserById(userId);
+        if (!findUser) {
+            return errorList.commonError400(res, 'User not found.');
+        }
+        if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.STUDENT])) {
+            return errorList.commonError(res, 'You are not permission get all user.', 403);
+        }
+        const { result, total } = await MajorsService.fetchByFacultys(req.query);
+        res.json({
+            statusCode: 200,
+            data: result,
+            total,
+            message: 'Get list majors by faculty success.'
+        });
+    } catch (error) {
+        console.log(error)
         return errorList.error500(res);
     }
 };

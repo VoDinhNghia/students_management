@@ -26,7 +26,7 @@ exports.queryByAggregate = async(limit, page, aggregate = []) => {
         result,
         countDocument: total
     }
-}
+};
 
 exports.findUserLogin = async(email, passWord) => {
     const aggregate = aggregateCommon({
@@ -36,11 +36,11 @@ exports.findUserLogin = async(email, passWord) => {
     });
     const result = await UserModel.aggregate(aggregate);
     return result && result.length > 0 ? result[0] : null;
-}
+};
 
 exports.findUserByEmail = async(email) => {
     return await UserModel.findOne({ email });
-}
+};
 
 exports.fetchAllUsers = async(query) => {
     const { userId, limit, page } = query;

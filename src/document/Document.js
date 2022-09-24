@@ -23,7 +23,8 @@ const {
     majorsList,
     updateMajors,
     findMajorsById,
-    deleteMajors
+    deleteMajors,
+    majorsListByFaculty,
 } = require('./MajorsPath');
 const {
     attachmentList,
@@ -69,6 +70,7 @@ exports.swagger_options = {
             ...findFacultyById,
             ...deleteFaculty,
             ...facultyList,
+            ...majorsListByFaculty,
             ...createMajors,
             ...findMajorsById,
             ...deleteMajors,

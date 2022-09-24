@@ -1,11 +1,11 @@
 exports.roles = {
     ADMIN: 'ADMIN',
     STUDENT: 'STUDENT',
-    CLASS_MONITOR: 'CLASS_MONITOR',
-    HOMEROM_TEACHER: 'HOMEROM_TEACHER',
     LECTURER: 'LECTURER',
     LIBRARIAN: 'LIBRARIAN'
 }
+
+exports.rolesList = ['ADMIN', 'STUDENT', 'LECTURER', 'LIBRARIAN']
 
 exports.statusUser = {
     ACTIVE: 'ACTIVE',

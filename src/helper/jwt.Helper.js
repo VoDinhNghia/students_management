@@ -5,6 +5,7 @@ exports.generateToken = (user, secretSignature, tokenLife) => {
         const userData = {
             _id: user._id,
             email: user.email,
+            role: user.role
         }
         jwt.sign({ data: userData },
             secretSignature, {

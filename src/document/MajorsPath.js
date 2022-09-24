@@ -101,6 +101,72 @@ exports.majorsList = {
     }
 }
 
+exports.majorsListByFaculty = {
+    '/majors/get-by-faculty': {
+        'get': {
+            'tags': [
+                'Majors'
+            ],
+            'description': 'Get list majors by faculty',
+            'parameters': [{
+                    'name': 'userId',
+                    'in': 'query',
+                    'example': {
+                        'userId': '6319e8bac609ca008f6b041a'
+                    },
+                    'required': true
+                }, {
+                    'name': 'limit',
+                    'in': 'query',
+                    'example': {
+                        'limit': 10
+                    },
+                    'required': true
+                }, {
+                    'name': 'page',
+                    'in': 'query',
+                    'example': {
+                        'page': 1
+                    },
+                    'required': true
+                },
+                {
+                    'name': 'facultyIds',
+                    'in': 'query',
+                    'type': 'array',
+                    'example': {
+                        'facultyIds': []
+                    },
+                    'required': true
+                },
+                {
+                    "name": "Authorization",
+                    "in": "header",
+                    "description": "Authorization bearer token",
+                    "required": true
+                }
+            ],
+            "security": [{
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+            }],
+            'responses': {
+                '200': {
+                    'description': 'Get majors susscess.',
+                    'content': {
+                        'application/json': {
+                            'schema': {
+                                'type': 'array'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 exports.updateMajors = {
     '/majors/update': {
         'post': {

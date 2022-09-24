@@ -20,9 +20,10 @@ exports.login = async(req, res) => {
         const userInfo = {
             _id: findUser._id,
             email: findUser.email,
+            role: findUser.role,
         }
         let historyLogin = findUser.historyLogin || [];
-        if (historyLogin.login > 5) {
+        if (historyLogin.length > 5) {
             historyLogin = [];
         }
         historyLogin.push({

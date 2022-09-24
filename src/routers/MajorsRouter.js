@@ -6,6 +6,7 @@ const {
     findByIdMajors,
     updateMajors,
     deleteMajors,
+    fetchByFaculty,
 } = require('../controllers/organizational_structure/faculty/MajorsController');
 
 const AuthMiddleWare = require('../middleware/AuthMiddleware');
@@ -16,5 +17,6 @@ router.route('/create').post(createMajors);
 router.route('/get-by-id/:id').get(findByIdMajors);
 router.route('/delete/:id').delete(deleteMajors);
 router.route('/update').post(updateMajors);
+router.route('/get-by-faculty').get(fetchByFaculty);
 
 module.exports = router;
