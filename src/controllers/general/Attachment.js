@@ -2,7 +2,8 @@ const AttachmentService = require('../../services/general/AttachmentService');
 const UserService = require('../../services/users/UserService');
 const errorList = require('../../error/ErrorList');
 const urlConfig = require('../../config/Config').url;
-const { roles } = require('../../common/Constant');
+const { permission } = require('../../common/Constant');
+const { checkRoleAccess } = require('../../common/CheckRoleAccess');
 
 exports.uploadImage = async(req, res) => {
     try {
@@ -38,12 +39,9 @@ exports.uploadPdf = async(req, res) => {
 exports.fetchAllAttachments = async(req, res) => {
     try {
         const { userId } = req.query;
-        const findUser = await UserService.findUserById(userId);
-        if (!findUser) {
-            return errorList.commonError400(res, 'User not found.');
-        }
-        if (findUser.role !== roles.ADMIN) {
-            return errorList.commonError(res, 'You are not permission get all user.', 403);
+        const getUserAccess = await UserService.findUserById(userId);
+        if (!checkRoleAccess(permission.ADMIN, getUserAccess ? getUserAccess.role : '')) {
+            return errorList.commonError(res, 'You are have permission to get all attachment.', 403);
         }
         const { data, total } = await AttachmentService.fetchAllAttachment(req.query);
         res.json({

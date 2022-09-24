@@ -226,8 +226,54 @@ exports.updateUser = {
                     'description': 'key search',
                     'example': {
                         'id': '6315af29c8d78031aca812d8',
+                        'status': 'string',
+                        'updateBy': '6319e8bac609ca008f6b041a'
+                    },
+                    'required': true
+                },
+                {
+                    'name': 'Authorization',
+                    'in': 'header',
+                    'description': 'Authorization bearer token',
+                    'required': true
+                }
+            ],
+            'security': [{
+                'type': 'http',
+                'scheme': 'bearer',
+                'bearerFormat': 'JWT',
+            }],
+            'responses': {
+                '200': {
+                    'description': 'Update susscess.',
+                    'content': {
+                        'application/json': {
+                            'schema': {
+                                'type': 'array'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+exports.updateUser = {
+    '/user/update/profile': {
+        'put': {
+            'tags': [
+                'User'
+            ],
+            'description': 'Update info user',
+            'parameters': [{
+                    'name': 'body',
+                    'in': 'body',
+                    'description': 'key search',
+                    'example': {
+                        'id': '6315af29c8d78031aca812d8',
                         'name': 'string',
-                        'userId': '6319e8bac609ca008f6b041a'
+                        'updateBy': '6319e8bac609ca008f6b041a'
                     },
                     'required': true
                 },
@@ -260,22 +306,15 @@ exports.updateUser = {
 }
 
 exports.findUserById = {
-    '/user/get-by-id': {
+    '/user/get-by-id/{id}': {
         'get': {
             'tags': [
                 'User'
             ],
             'description': 'Get user by id',
             'parameters': [{
-                    'name': 'userId',
-                    'in': 'query',
-                    'example': {
-                        'userId': '6319e8bac609ca008f6b041a'
-                    },
-                    'required': true
-                }, {
                     'name': 'id',
-                    'in': 'query',
+                    'in': 'path',
                     'description': 'id user',
                     'example': {
                         'id': 'string'

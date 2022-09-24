@@ -1,15 +1,15 @@
 const MajorsService = require('../../../services/organizational_structure/faculty/MajorsService');
 const FaculTyService = require('../../../services/organizational_structure/faculty/FacultyService');
 const UserService = require('../../../services/users/UserService');
-const { roles } = require('../../../common/Constant');
+const { permission } = require('../../../common/Constant');
 const { checkRoleAccess } = require('../../../common/CheckRoleAccess');
 const errorList = require('../../../error/ErrorList');
 
 exports.createMajors = async(req, res) => {
     try {
-        const { name, facultyId, userId } = req.body;
-        const findUser = await UserService.findUserById(userId);
-        if (!checkRoleAccess([roles.ADMIN], findUser ? findUser.role : '')) {
+        const { name, facultyId, createBy } = req.body;
+        const findUser = await UserService.findUserById(createBy);
+        if (!checkRoleAccess(permission.ADMIN, findUser ? findUser.role : '')) {
             return errorList.commonError(res, 'You are not permission create majors.', 403);
         }
         const existedMajors = await MajorsService.findByname(name);
@@ -36,11 +36,6 @@ exports.createMajors = async(req, res) => {
 
 exports.fetchAllMajors = async(req, res) => {
     try {
-        const { userId } = req.query;
-        const findUser = await UserService.findUserById(userId);
-        if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.STUDENT], findUser ? findUser.role : '')) {
-            return errorList.commonError(res, 'You are not permission get all user.', 403);
-        }
         const { result, total } = await MajorsService.fetchAllMajors(req.query);
         res.json({
             statusCode: 200,
@@ -55,11 +50,7 @@ exports.fetchAllMajors = async(req, res) => {
 
 exports.findByIdMajors = async(req, res) => {
     try {
-        const { id, userId } = req.query;
-        const findUser = await UserService.findUserById(userId);
-        if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.STUDENT], findUser ? findUser.role : '')) {
-            return errorList.commonError(res, 'You are not permission get all majors.', 403);
-        }
+        const { id } = req.params;
         const result = await MajorsService.findById(id);
         if (!result) {
             return errorList.commonError400(res, 'Majors not found.');
@@ -77,9 +68,9 @@ exports.findByIdMajors = async(req, res) => {
 
 exports.updateMajors = async(req, res) => {
     try {
-        const { id, userId } = req.body;
-        const findUser = await UserService.findUserById(userId);
-        if (!checkRoleAccess([roles.ADMIN], findUser ? findUser.role : '')) {
+        const { id, updateBy } = req.body;
+        const findUser = await UserService.findUserById(updateBy);
+        if (!checkRoleAccess(permission.ADMIN, findUser ? findUser.role : '')) {
             return errorList.commonError(res, 'You are not permission update majors.', 403);
         }
         const existedMajors = await MajorsService.findById(id);
@@ -99,9 +90,9 @@ exports.updateMajors = async(req, res) => {
 
 exports.deleteMajors = async(req, res) => {
     try {
-        const { id, userId } = req.query;
-        const findUser = await UserService.findUserById(userId);
-        if (!checkRoleAccess([roles.ADMIN], findUser ? findUser.role : '')) {
+        const { id, deleteBy } = req.query;
+        const findUser = await UserService.findUserById(deleteBy);
+        if (!checkRoleAccess(permission.ADMIN, findUser ? findUser.role : '')) {
             return errorList.commonError(res, 'You are not permission delete majors.', 403);
         }
         const existedMajors = await MajorsService.findById(id);
@@ -121,13 +112,9 @@ exports.deleteMajors = async(req, res) => {
 
 exports.fetchByFaculty = async(req, res) => {
     try {
-        const { facultyIds, userId } = req.query;
+        const { facultyIds } = req.query;
         if (!facultyIds) {
             return errorList.commonError400(res, 'facultyIds must provided.')
-        }
-        const findUser = await UserService.findUserById(userId);
-        if (!checkRoleAccess([roles.ADMIN, roles.LECTURER, roles.STUDENT], findUser ? findUser.role : '')) {
-            return errorList.commonError(res, 'You are not permission get majors by faculty.', 403);
         }
         const { result, total } = await MajorsService.fetchByFacultys(req.query);
         res.json({

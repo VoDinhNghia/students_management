@@ -4,7 +4,7 @@ const jwtHelper = require('../../helper/jwt.Helper');
 const errorList = require('../../error/ErrorList');
 const { cryptoPass } = require('../../common/Crypto');
 const ConfigKeySecret = require('../../config/Config').ConfigKeySecret;
-const { roles } = require('../../common/Constant');
+const { permission } = require('../../common/Constant');
 const { validateEmail } = require('../../common/validateEmail');
 const { checkRoleAccess } = require('../../common/CheckRoleAccess');
 
@@ -53,7 +53,7 @@ exports.createUser = async(req, res) => {
     try {
         const { email, passWord, createBy } = req.body;
         const getUserAccess = await UserService.findUserById(createBy);
-        if (!checkRoleAccess([roles.ADMIN], getUserAccess ? getUserAccess.role : '')) {
+        if (!checkRoleAccess(permission.ADMIN, getUserAccess ? getUserAccess.role : '')) {
             return errorList.commonError(res, 'You are have permission to create user.', 403);
         }
         const findUser = await UserService.findUserByEmail(email);
@@ -84,9 +84,9 @@ exports.createUser = async(req, res) => {
 
 exports.updateUser = async(req, res) => {
     try {
-        const { id, userId } = req.body;
-        const getUserAccess = await UserService.findUserById(userId);
-        if (!checkRoleAccess([roles.ADMIN], getUserAccess ? getUserAccess.role : '')) {
+        const { id, updateBy } = req.body;
+        const getUserAccess = await UserService.findUserById(updateBy);
+        if (!checkRoleAccess(permission.ADMIN, getUserAccess ? getUserAccess.role : '')) {
             return errorList.commonError(res, 'You are have permission to update user.', 403);
         }
         const findUser = await UserService.findUserById(id);

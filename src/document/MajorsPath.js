@@ -15,7 +15,7 @@ exports.createMajors = {
                     'award': [],
                     'facultyId': '6315a72d6639fa774b550328',
                     'lecturerList': [],
-                    'userId': '6319e8bac609ca008f6b041a',
+                    'createBy': '6319e8bac609ca008f6b041a',
                 },
                 'required': true
             }, {
@@ -53,13 +53,6 @@ exports.majorsList = {
             ],
             'description': 'Get Majors',
             'parameters': [{
-                    'name': 'userId',
-                    'in': 'query',
-                    'example': {
-                        'userId': '6319e8bac609ca008f6b041a'
-                    },
-                    'required': true
-                }, {
                     'name': 'limit',
                     'in': 'query',
                     'example': {
@@ -110,13 +103,6 @@ exports.majorsListByFaculty = {
             ],
             'description': 'Get list majors by faculty',
             'parameters': [{
-                    'name': 'userId',
-                    'in': 'query',
-                    'example': {
-                        'userId': '6319e8bac609ca008f6b041a'
-                    },
-                    'required': true
-                }, {
                     'name': 'limit',
                     'in': 'query',
                     'example': {
@@ -170,7 +156,7 @@ exports.majorsListByFaculty = {
 
 exports.updateMajors = {
     '/majors/update': {
-        'post': {
+        'put': {
             'tags': [
                 'Majors'
             ],
@@ -182,7 +168,7 @@ exports.updateMajors = {
                     'example': {
                         'id': '6315af29c8d78031aca812d8',
                         'name': 'string',
-                        'userId': '6319e8bac609ca008f6b041a'
+                        'updateBy': '6319e8bac609ca008f6b041a'
                     },
                     'required': true
                 },
@@ -215,22 +201,15 @@ exports.updateMajors = {
 }
 
 exports.findMajorsById = {
-    '/majors/get-by-id': {
+    '/majors/get-by-id/{id}': {
         'get': {
             'tags': [
                 'Majors'
             ],
             'description': 'Get majors by id',
             'parameters': [{
-                    'name': 'userId',
-                    'in': 'query',
-                    'example': {
-                        'userId': '6319e8bac609ca008f6b041a'
-                    },
-                    'required': true
-                }, {
                     'name': 'id',
-                    'in': 'query',
+                    'in': 'path',
                     'description': 'id majors',
                     'example': {
                         'id': 'string'
@@ -273,10 +252,10 @@ exports.deleteMajors = {
             ],
             'description': 'Delete majors.',
             'parameters': [{
-                    'name': 'userId',
+                    'name': 'deleteBy',
                     'in': 'query',
                     'example': {
-                        'userId': '6319e8bac609ca008f6b041a'
+                        'deleteBy': '6319e8bac609ca008f6b041a'
                     },
                     'required': true
                 }, {

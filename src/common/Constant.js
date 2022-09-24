@@ -5,7 +5,13 @@ exports.roles = {
     LIBRARIAN: 'LIBRARIAN'
 }
 
-exports.rolesList = ['ADMIN', 'STUDENT', 'LECTURER', 'LIBRARIAN']
+exports.permission = {
+    FULL: ['ADMIN', 'STUDENT', 'LECTURER', 'LIBRARIAN'],
+    LECTURER: ['ADMIN', 'LECTURER'],
+    STUDENT: ['ADMIN', 'LECTURER', 'STUDENT'],
+    LIBRARIAN: ['ADMIN', 'LIBRARIAN'],
+    ADMIN: ['ADMIN'],
+}
 
 exports.statusUser = {
     ACTIVE: 'ACTIVE',

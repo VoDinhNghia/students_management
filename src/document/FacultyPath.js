@@ -14,7 +14,7 @@ exports.createFaculty = {
                     'foundYear': '2022-05-29',
                     'award': [],
                     'lecturerList': [],
-                    'userId': '6319e8bac609ca008f6b041a'
+                    'createBy': '6319e8bac609ca008f6b041a'
                 },
                 'required': true
             }, {
@@ -52,13 +52,6 @@ exports.facultyList = {
             ],
             'description': 'Get faculty',
             'parameters': [{
-                    'name': 'userId',
-                    'in': 'query',
-                    'example': {
-                        'userId': '6319e8bac609ca008f6b041a'
-                    },
-                    'required': true
-                }, {
                     'name': 'limit',
                     'in': 'query',
                     'example': {
@@ -103,7 +96,7 @@ exports.facultyList = {
 
 exports.updateFaculty = {
     '/faculty/update': {
-        'post': {
+        'put': {
             'tags': [
                 'Faculty'
             ],
@@ -115,7 +108,7 @@ exports.updateFaculty = {
                     'example': {
                         'id': '6315af29c8d78031aca812d8',
                         'name': 'string',
-                        'userId': '6319e8bac609ca008f6b041a'
+                        'updateBy': '6319e8bac609ca008f6b041a'
                     },
                     'required': true
                 },
@@ -148,22 +141,15 @@ exports.updateFaculty = {
 }
 
 exports.findFacultyById = {
-    '/faculty/get-by-id': {
+    '/faculty/get-by-id/{id}': {
         'get': {
             'tags': [
                 'Faculty'
             ],
             'description': 'Get faculty by id',
             'parameters': [{
-                    'name': 'userId',
-                    'in': 'query',
-                    'description': 'user Id: 6319e8bac609ca008f6b041a',
-                    'example': {
-                        'userId': '6319e8bac609ca008f6b041a'
-                    }
-                }, {
                     'name': 'id',
-                    'in': 'query',
+                    'in': 'path',
                     'description': 'id faculty',
                     'example': {
                         'id': 'string'
@@ -206,11 +192,11 @@ exports.deleteFaculty = {
             ],
             'description': 'Delete faculty.',
             'parameters': [{
-                    'name': 'userId',
+                    'name': 'deleteBy',
                     'in': 'query',
                     'description': 'id user: 6319e8bac609ca008f6b041a',
                     'example': {
-                        'userId': '6319e8bac609ca008f6b041a'
+                        'deleteBy': '6319e8bac609ca008f6b041a'
                     },
                     'required': true
                 }, {
