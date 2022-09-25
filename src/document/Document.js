@@ -32,6 +32,10 @@ const {
     uploadAttachmentPdf,
     findAttachmentById
 } = require('./AttachmentPath');
+const {
+    createDegreeLevel,
+    fetchAllDegreeLevel,
+} = require('./DegreeLevelPath');
 
 exports.swagger_options = {
     routePrefix: '/documentation',
@@ -81,6 +85,8 @@ exports.swagger_options = {
             ...uploadAttachmentPdf,
             ...findAttachmentById,
             ...codeStatus,
+            ...createDegreeLevel,
+            ...fetchAllDegreeLevel,
         }
     },
     basedir: __dirname,

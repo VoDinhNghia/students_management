@@ -12,8 +12,10 @@ exports.createClass = async(user) => {
     return await ClassModel.create(user);
 };
 
-exports.updateClass = async(id, user) => {
-    return await ClassModel.findByIdAndUpdate(id, user);
+exports.updateClass = async(updateInfo) => {
+    const findClass = await ClassModel.findById(updateInfo.id);
+    findClass.set(majors);
+    return await findDegree.save();
 };
 
 exports.deleteClass = async(id) => {

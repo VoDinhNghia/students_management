@@ -17,6 +17,7 @@ const CountriesRouter = require('../src/routers/CountriesRouter');
 const FacultyRouter = require('../src/routers/FacultyRouter');
 const MajorsRouter = require('../src/routers/MajorsRouter');
 const Attachment = require('../src/routers/AttachmentRouter');
+const DegreeLevelRouter = require('../src/routers/DegreeLevelRouter');
 
 app.use(express.json());
 app.use('/api-docs', documentAPI);
@@ -25,6 +26,7 @@ app.use('/api/country', CountriesRouter);
 app.use('/api/faculty', FacultyRouter);
 app.use('/api/majors', MajorsRouter);
 app.use('/api/attachment', Attachment);
+app.use('/api/degree-level/', DegreeLevelRouter);
 
 const port = require('./config/Config').port;
 app.listen(port, () => {
