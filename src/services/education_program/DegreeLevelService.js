@@ -26,7 +26,10 @@ exports.createDegreeLevel = async(degreeInfo) => {
 
 exports.updateDegreeLevel = async(degree) => {
     const findDegree = await DegreeLevelModel.findById(degree.id);
-    findDegree.set(majors);
+    if (!findDegree) {
+        return null;
+    }
+    findDegree.set(degree);
     return await findDegree.save();
 };
 

@@ -35,6 +35,9 @@ const {
 const {
     createDegreeLevel,
     fetchAllDegreeLevel,
+    findDegreeLevelById,
+    updateDegreeLevel,
+    deleteDegreeLevel,
 } = require('./DegreeLevelPath');
 
 exports.swagger_options = {
@@ -87,6 +90,9 @@ exports.swagger_options = {
             ...codeStatus,
             ...createDegreeLevel,
             ...fetchAllDegreeLevel,
+            ...findDegreeLevelById,
+            ...updateDegreeLevel,
+            ...deleteDegreeLevel,
         }
     },
     basedir: __dirname,

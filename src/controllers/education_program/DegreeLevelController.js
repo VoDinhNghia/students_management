@@ -35,3 +35,63 @@ exports.fetchAllDegreeLevel = async(req, res) => {
         return errorList.error500(res);
     }
 };
+
+exports.findDegreeLevelById = async(req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await DegreeLevelService.findById(id);
+        if (!result) {
+            return errorList.commonError400(res, 'Degree level not found.');
+        }
+        return res.json({
+            statusCode: 200,
+            data: result,
+            message: 'Find degree level success.'
+        })
+    } catch (error) {
+        return errorList.error500(res);
+    }
+};
+
+exports.updateDegreeLevel = async(req, res) => {
+    try {
+        const { updateBy } = req.body;
+        const findUserAccess = await UserService.findUserById(updateBy);
+        if (!checkRoleAccess(permission.ADMIN, findUserAccess ? findUserAccess.role : '')) {
+            return errorList.commonError(res, 'You are not permission update degree level.', 403);
+        }
+        const result = await DegreeLevelService.updateDegreeLevel(req.body);
+        if (!result) {
+            return errorList.commonError400(res, 'Degree level not found.');
+        }
+        return res.json({
+            statusCode: 200,
+            data: result,
+            message: 'Update degree level success.'
+        })
+    } catch (error) {
+        return errorList.error500(res);
+    }
+};
+
+exports.deleteDegreeLevel = async(req, res) => {
+    try {
+        const { id, deleteBy } = req.query;
+        const findUserAccess = await UserService.findUserById(deleteBy);
+        if (!checkRoleAccess(permission.ADMIN, findUserAccess ? findUserAccess.role : '')) {
+            return errorList.commonError(res, 'You are not permission delete degree level.', 403);
+        }
+        const result = await DegreeLevelService.findById(id);
+        if (!result) {
+            return errorList.commonError400(res, 'Degree level not found.');
+        }
+        await DegreeLevelService.deleteDegreeLevel(id);
+        return res.json({
+            statusCode: 200,
+            message: 'Delete degree level success.'
+        })
+    } catch (error) {
+        console.log(error)
+        return errorList.error500(res);
+    }
+};
