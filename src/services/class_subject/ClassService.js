@@ -14,8 +14,8 @@ exports.createClass = async(user) => {
 
 exports.updateClass = async(updateInfo) => {
     const findClass = await ClassModel.findById(updateInfo.id);
-    findClass.set(majors);
-    return await findDegree.save();
+    findClass.set(findClass);
+    return await findClass.save();
 };
 
 exports.deleteClass = async(id) => {

@@ -1,4 +1,4 @@
-exports.whiteList = ['http://localhost:3000', 'http://localhost:8000']; // add url of frontend to avoid error cors
+exports.whiteList = ['http://localhost:3000', 'http://localhost:8000', 'http://localhost:8001']; // add url of frontend to avoid error cors
 
 exports.corsOptionsDelegate = (req, callback) => {
     let corsOptions;
