@@ -48,3 +48,14 @@ exports.libraryServiceType = {
     BORROW_ROOM: 'BORROW_ROOM',
     RESERVE_SEAT: 'RESERVE_SEAT'
 }
+
+exports.typePayments = {
+    payments: {
+        CASH: 'CASH',
+        ONLINE: 'ONLINE',
+    },
+    status: {
+        PAID: 'PAID',
+        OWED: 'OWED'
+    }
+}

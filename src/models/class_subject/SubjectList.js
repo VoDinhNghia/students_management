@@ -39,6 +39,9 @@ const subjectSchema = new Schema({
     numberOfCredits: { // 3 TC
         type: Number,
     },
+    semesterId: {
+        type: Schema.Types.ObjectId,
+    },
     numberOfFailed: {
         type: Number,
     },

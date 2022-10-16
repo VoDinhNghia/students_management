@@ -36,18 +36,22 @@ const profileSchema = new Schema({
     gender: {
         type: String,
     },
-    listSubject: [ // list subject
-        {
-            subjectId: Schema.Types.ObjectId,
-            result: String, // failed or pass
-        }
-    ],
     study: [{ // research articles, graduate theses
         attachmentId: Schema.Types.ObjectId,
+        semesterId: Schema.Types.ObjectId,
+        type: String,
     }],
     studyProcess: {
         listSemester: [{
-            semesterId: Schema.Types.ObjectId
+            semesterId: {
+                type: Schema.Types.ObjectId
+            },
+            listSubject: [ // list subject
+                {
+                    subjectId: Schema.Types.ObjectId,
+                    result: String, // failed or pass
+                }
+            ],
         }],
         toeicCertificate: {
             status: Boolean,
