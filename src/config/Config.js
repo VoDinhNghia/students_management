@@ -13,7 +13,7 @@ exports.url = `http://localhost:3000`;
 //configure mongoose
 exports.connectDB = {
     mongoDB: mongoose.connect(
-        process.env.MONGODB_URI || "mongodb://localhost/students_management", {
+        process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/students_management", {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         },
